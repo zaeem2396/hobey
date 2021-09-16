@@ -1,0 +1,60 @@
+.navbar-brand img
+{
+    width: 200px;
+    height: auto;
+    object-fit: contain;
+}
+.min_footer {
+    background: #d9dad8;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: 9;
+    padding: 10px 0;
+}
+.min_footer p
+{
+    margin: 0;
+}
+.alert-danger {
+    background-color: transparent;
+    border-color: #ebccd1;
+    color: #ff0500;
+    margin: -20px 9px 0px -15px;
+    border: navajowhite;
+    padding: 0 14px;
+	margin: 5px 0 10px !important;
+}
+.my_flex
+{
+    display: flex;
+}
+.my_flex a
+{
+    margin-bottom: 25px;
+}
+
+table.dataTable tr td {
+    text-align: center;
+}
+
+table.dataTable thead > tr > th {
+    padding-right: 18px !important;
+}
+
+th.sorting_asc {
+    text-align: center;
+}
+
+#main {
+    margin-top: 60px;
+    margin-bottom: 40px;
+}
+
+div#validator {
+    margin: 5px 0 10px;
+}
+
+.table-responsive {
+    overflow: auto;
+}

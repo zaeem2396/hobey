@@ -1,0 +1,42 @@
+[b]Attention[/b] This plugin is not ready to use, you have to expand your filebrowser.
+
+This plugin adds two new tabs to the flash dialog. One for FLV if you load a *.flv and one for MP3 if you load a *.mp3 file from your filebrowser. That the plugin works your filebrowser has to set "playerpath/player/flvplayer.swf?flv=/path/to/your/file/movie.flv" for FLVs or "playerpath/player/mp3player.swf?mp3=/path/to/your/file/music.mp3" for MP3s to dialogs URL field.
+
+To test the plugin you can load a FLV file to flash dialog and copy "playerpath/player/flvplayer.swf?flv=" before the URL.
+
+[b]Known bug:[/b] You can not use the fullscreen feature of FLV-player. That's a bug of CKEditor. It is not possible to set allowFullScreen to true for swf files.
+
+The plugin uses the players from neolao: [url=http://www.flv-player.net/]flv-player.net[/url] [url=http://www.flash-mp3-player.net/]flash-mp3-player.net[/url]
+
+[b]Correct translation is needed![/b]
+
+
+[b]License[/b]
+
+Licensed under the terms of the [url=http://www.gnu.org/licenses/gpl.html]GPL[/url].
+
+
+[b]Download[/b]
+
+[url=http://]FLV and MP3 player for CKEditor[/url]
+
+
+[b]Installation[/b]
+
+1. Extract the archiv.
+2. Copy the "flashplayer" folder to CKEditors "plugins" folder.
+3. Copy the "player" folder to a folder of your choice.
+4. Open the file "/flashplayer/config.js". Make the settings for "mediapath", means the rootpath were your *.flv and *.mp3 files are located. "playerpath" means the path were you have placed the "player" folder.
+5. Open the file "/flashplayer/swfsize.php" and set your server rootpath to $server_path.
+6. In the CKEditor configuration file (config.js) add the following code:
+
+[code]
+config.extraPlugins = 'flashplayer';
+[/code]
+
+7. It is possible to open FLVs with a link in a lightbox like window. If you want to use this feature, load the file "playerpath/player/flvvideobox.js" to your HTML page.
+8. Open the file "playerpath/player/flvvideobox.js" and set the path to player folder to FLVPlayer_rootpath:
+
+[code]
+var FLVPlayer_rootpath = 'your/playerpath/';
+[/code]
