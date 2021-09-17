@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['document_root']  = $_SERVER['DOCUMENT_ROOT'];
 
+// UNCOMMENT WHEN HOST ON LIVE SERVER
 
 // $config['http_host']	  = "https://".$_SERVER['HTTP_HOST']."/beta/";
 // $config['base_url']	      = "https://".$_SERVER['HTTP_HOST']."/beta/index.php/";

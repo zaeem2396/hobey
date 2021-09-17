@@ -179,6 +179,7 @@ class Home extends CI_Controller
 	function customer_cart()
 	{
 		$data['err_msg'] = '';
+		var_dump($data);exit;
 		$this->load->view('customer/cart', $data);
 	}
 

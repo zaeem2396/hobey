@@ -308,7 +308,7 @@ $http_host = $this->config->item('http_host');
           <form action="<?php echo $base_url; ?>home/set_pincode" method="post" id="set_pincode" name="set_pincode">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Enter Your PIN Code here</h4>
+              <h4 class="modal-title">Enter Your PIN Code</h4>
             </div>
             <div class="modal-body">
               <div id="error_pincode" class="alert-message valierror " style="display:none;width: 100%;">
