@@ -935,4 +935,3 @@ function add($content) 	{
 		}
 	}
 }
-?>

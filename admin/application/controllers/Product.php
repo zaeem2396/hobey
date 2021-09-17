@@ -49,6 +49,8 @@
 		$data['allcategory'] = $this->product_model->alldata("material");
 		// echo "<pre>"; print_r($data['category']); echo "</pre>"; exit();
 		//$data['subcategory'] = $this->product_model->alldata("subcategory");
+		// echo "<pre>";
+		// var_dump($data);exit;
 		$this->load->view('list_product', $data);
 	}
 	

@@ -30,12 +30,21 @@ $config['front_base_url'] = "http://www.fiveonline.in/shemaroo/";
 $config['base_url_views'] = "http://www.fiveonline.in/shemaroo/admin/application/views/";
 $config['upload'] = $_SERVER['DOCUMENT_ROOT']."/shemaroo/upload/";*/
 
-$config['document_root'] = $_SERVER['DOCUMENT_ROOT']."/beta/admin/";
-$config['http_host']	= "https://".$_SERVER['HTTP_HOST']."/beta/admin/";
-$config['base_url']	= "https://".$_SERVER['HTTP_HOST']."/beta/admin/index.php/";
-$config['front_base_url'] = "https://".$_SERVER['HTTP_HOST']."/beta/";
-$config['base_url_views'] = "https://".$_SERVER['HTTP_HOST']."/beta/admin/application/views/";
-$config['upload'] = $_SERVER['DOCUMENT_ROOT']."/beta/upload/";
+// $config['document_root'] = $_SERVER['DOCUMENT_ROOT']."/beta/admin/";
+// $config['http_host']	= "https://".$_SERVER['HTTP_HOST']."/beta/admin/";
+// $config['base_url']	= "https://".$_SERVER['HTTP_HOST']."/beta/admin/index.php/";
+// $config['front_base_url'] = "https://".$_SERVER['HTTP_HOST']."/beta/";
+// $config['base_url_views'] = "https://".$_SERVER['HTTP_HOST']."/beta/admin/application/views/";
+// $config['upload'] = $_SERVER['DOCUMENT_ROOT']."/beta/upload/";
+
+
+// FOR TESTING PURPOSE
+$config['document_root'] = $_SERVER['DOCUMENT_ROOT']."/hobey/admin/";
+$config['http_host']	= "http://".$_SERVER['HTTP_HOST']."/hobey/admin/";
+$config['base_url']	= "http://".$_SERVER['HTTP_HOST']."/hobey/admin/index.php/";
+$config['front_base_url'] = "http://".$_SERVER['HTTP_HOST']."/hobey/";
+$config['base_url_views'] = "http://".$_SERVER['HTTP_HOST']."/hobey/admin/application/views/";
+$config['upload'] = $_SERVER['DOCUMENT_ROOT']."/hobey/upload/";
 
 
 /*$config['admin_email']       = "patelnikul321@gmail.com";

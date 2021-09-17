@@ -34,12 +34,12 @@ $config['document_root']  = $_SERVER['DOCUMENT_ROOT'];
 
 
 // TEST LINKS 
-$config['http_host']	  = "https://".$_SERVER['HTTP_HOST']."/hobey/";
-$config['base_url']	      = "https://".$_SERVER['HTTP_HOST']."/hobey/index.php/";
-$config['front_base_url'] = "https://".$_SERVER['HTTP_HOST']."/hobey/";
-$config['base_url_views'] = "https://".$_SERVER['HTTP_HOST']."/hobey/site/views/"; 
+$config['http_host']	  = "http://".$_SERVER['HTTP_HOST']."/hobey/";
+$config['base_url']	      = "http://".$_SERVER['HTTP_HOST']."/hobey/index.php/";
+$config['front_base_url'] = "http://".$_SERVER['HTTP_HOST']."/hobey/";
+$config['base_url_views'] = "http://".$_SERVER['HTTP_HOST']."/hobey/site/views/"; 
 $config['upload']         = $_SERVER['DOCUMENT_ROOT'].'/hobey/upload/';
-$config['findex_url']     = "https://".$_SERVER['HTTP_HOST']."/hobey/";
+$config['findex_url']     = "http://".$_SERVER['HTTP_HOST']."/hobey/";
 // TEST LINKS END
 
 
