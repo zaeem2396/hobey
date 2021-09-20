@@ -113,6 +113,7 @@
 		$data['result'] = $return['result'];
 		$config['total_rows'] = $return['count'];
 		$this->pagination->initialize($config);
+		// echo "<pre>";var_dump($data);exit;
 		$this->load->view('list_city', $data);
 	}
 	
@@ -198,4 +199,3 @@ function featured_product($pid,$value)
 	}
  
 }
-?>

@@ -436,5 +436,3 @@
 		redirect($this->config->item('base_url').'user/lists_notify');
 	}
 }
-
-?>

@@ -21,7 +21,7 @@ class Orders extends CI_Controller
         $this->data['alldistributors'] = $this->orders_model->alldistributors();
 
         $this->data['orders_list'] = $this->orders_model->getOrdersDistributors($id = '', $status, $startdate, $enddate, $distributor_id);
-
+        // echo "<pre>";var_dump($this->data['alldistributors'][0]->name);exit;
         $this->load->view('list_order', $this->data);
     }
 
