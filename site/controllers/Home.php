@@ -179,7 +179,8 @@ class Home extends CI_Controller
 	function customer_cart()
 	{
 		$data['err_msg'] = '';
-		var_dump($data);exit;
+		var_dump($data);
+		exit;
 		$this->load->view('customer/cart', $data);
 	}
 
@@ -233,6 +234,8 @@ class Home extends CI_Controller
 
 	function login1()
 	{
+		// echo "<pre>";
+		// var_dump($_POST);exit;
 		$data = array();
 		$data['err_msg'] = '';
 		$data['flashError'] = '';
@@ -247,7 +250,6 @@ class Home extends CI_Controller
 			$content['email'] = $data['login_email'];
 			$content['password'] = $data['login_password'];
 			$checklogin = $this->home_model->userlogin($content);
-
 			if ($checklogin != '') {
 
 				$newuserdata = array(
@@ -262,7 +264,8 @@ class Home extends CI_Controller
 					'status'  => $checklogin->status,
 					'logged_in' => true
 				);
-
+				// echo "<pre>";
+				// var_dump($newuserdata);exit;
 				$check = $this->session->set_userdata($newuserdata);
 
 				$this->session->set_flashdata('success_login', 'Login Successfull!!!!');
@@ -304,6 +307,7 @@ class Home extends CI_Controller
 		//$data['productCount'] = $this->home_model->productCount($this->session->userdata('userid'));
 		$data['orderCount'] = $this->home_model->getDistributorTotalOrders($order_id = '', $status = '');
 		$data['getOrdersCount'] = $this->home_model->getDistributorOrderscount($order_id = '', 'P');
+		// echo "<pre>";var_dump($data);exit;
 		$this->load->view('distributor_profile', $data);
 	}
 
@@ -738,9 +742,7 @@ class Home extends CI_Controller
 			$statuss = $status;
 		}
 		$data['orders_list'] = $this->home_model->getDistributorOrders($id = '', $statuss);
-
-		//echo $this->db->last_query(); die;
-		//echo "<pre>"; print_r($data['orders_list']); die;
+		// echo "<pre>"; var_dump($data['orders_list']); exit;
 		$this->load->view('distributor_my_order', $data);
 	}
 
@@ -755,7 +757,7 @@ class Home extends CI_Controller
 		//echo $this->session->userdata("userid"); die;
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
-		//echo "<pre>"; print_r($data['orders_list']); die;
+		//echo "<pre>"; var_dump($data['orders_list']); exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
 	function deliveryboy_customer_my_order()

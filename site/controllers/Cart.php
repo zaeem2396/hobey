@@ -27,13 +27,14 @@ class Cart extends CI_Controller
 		$min_qty = $this->input->post('min_qty');
 
 		$details = $this->cart_model->prodetails($pid);
-
+		// var_dump($details);
 		$get_total_qty = $this->cart_model->get_total_qty($pid);
-		//print_r($details); die;
+		// var_dump($get_total_qty); exit;
 		$cate_detaisl = $this->home_model->get_category($details->material_type);
-		//	echo $get_total_qty; die;
+		// var_dump($details);exit;
 		if (($details->inventory) >= ($qty + $get_total_qty)) {
-
+			// var_dump($details->inventory);
+			// var_dump($qty + $get_total_qty);exit;
 			$data['cartprod'] = array(
 				'id'      => $details->id,
 				'qty'     => $qty,

@@ -46,7 +46,6 @@ class Home_Model extends CI_Model
 		$sql = "select * from users where (email = '" . addslashes($arrContent['email']) . "' ) AND password = '" . addslashes($arrContent['password']) . "' AND user_vendor != 0";
 
 		$query = $this->db->query($sql);
-
 		if ($query->num_rows() > 0) {
 			$result = $query->row();
 			return $result;
@@ -3632,7 +3631,7 @@ class Home_Model extends CI_Model
 		$this->db->where('ci_orders.payment_status', 'Success');
 		$this->db->order_by('ci_orders.order_id', 'DESC');
 		$order_list = $this->db->get('ci_orders')->result_array();
-		//echo $this->db->last_query(); die;
+		// var_dump($this->db->last_query()); exit;
 		foreach ($order_list as &$order) {
 			$this->db->where('order_id', $order['order_id']);
 			$item_list = $this->db->get('ci_order_item')->result_array();
@@ -4040,7 +4039,7 @@ class Home_Model extends CI_Model
 		$sql .= "group by o.order_id order by ci.order_id desc";
 
 		//echo $sql;
-
+		// var_dump($this->db->last_query());exit;
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			$order_list = $query->result_array();
