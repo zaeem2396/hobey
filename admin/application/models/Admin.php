@@ -191,6 +191,7 @@ function list_user(){
 	}
 	
 	function topproducts(){
+		// replace p.name with p.material_name here
 	    $sql = "select ci.product_id, sum(ci.product_quantity) as qty, sum(ci.product_item_price) as price,p.name
                 from ci_order_item ci
                 inner join product p on p.id = ci.product_id
@@ -207,6 +208,7 @@ function list_user(){
 	}
 	
 	function topvendors(){
+		// replace u.company_name with u.name here
 	    $sql = "select ci.vendor_id, sum(ci.product_quantity) as qty, sum(ci.product_item_price) as price, u.company_name
                 from ci_order_item ci
                 inner join users u on u.id = ci.vendor_id
@@ -365,4 +367,3 @@ function list_user(){
 	}
  	
 }
-?>

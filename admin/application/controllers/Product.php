@@ -1328,4 +1328,3 @@ function show_area()
 			}
 	}
 }
-?>

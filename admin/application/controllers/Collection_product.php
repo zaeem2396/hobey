@@ -1314,4 +1314,3 @@ function show_area()
 		
     }
 }
-?>

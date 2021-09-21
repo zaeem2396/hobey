@@ -17,7 +17,7 @@ class Reviews_model extends CI_Model
 		$this->db->select('users.name');
         $this->db->order_by('reviews.id', 'DESC');
         $order_list = $this->db->get('reviews')->result_array();
-		
+		// var_dump($this->db->last_query());exit;
         return $order_list;
     }
     
