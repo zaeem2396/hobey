@@ -351,6 +351,7 @@ class Reports_management extends CI_Controller
 
 		//$data['allvendorproducts'] = $this->reports_management_model->allvendorproducts();
 		$data['alldistributor'] = $this->reports_management_model->alldistributor($data);
+		// echo "<pre>";var_dump($data['alldistributor'][0]->email);exit;
 		$this->load->view('distributor_paybale_report.php', $data);
 	}
 
@@ -443,9 +444,8 @@ class Reports_management extends CI_Controller
 
 	function vendor_special_report_download()
 	{
-
 		$data['product_id'] = $this->input->post('product_id');
-
+		// var_dump($data['product_id']);exit;
 		$allvendor = $this->reports_management_model->allvendorspecialproducts($data);
 
 		$output = 'VendorName,ProductName,Weight,Amount,Qty';

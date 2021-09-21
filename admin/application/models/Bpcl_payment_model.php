@@ -117,6 +117,7 @@
 		$sql = "SELECT * FROM users where id = '".$id."'";
 				
 		$query = $this->db->query($sql);
+// echo "<pre>";		var_dump($this->db->last_query());
 		if ($query->num_rows() > 0)
 		{
 			$result = $query->row()->name;
@@ -124,4 +125,3 @@
 		}
 	}
 }
-?>
