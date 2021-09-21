@@ -279,7 +279,7 @@ class Reports_management extends CI_Controller
 		$config['per_page'] = '10000';
 		$config['first_url'] = '0';
 		$data = array();
-		//using for searching data...
+		// using for searching data...
 		// $data['startdate'] = $this->input->post('startdate');
 		// $data['enddate'] = $this->input->post('enddate');
 		// $data['status'] = $this->input->post('status');
@@ -296,8 +296,8 @@ class Reports_management extends CI_Controller
 		//$data['allvendorproducts'] = $this->reports_management_model->allvendorproducts();
 
 		$data['allSpProducts'] = $this->reports_management_model->allSpProducts();
-
 		$data['allvendor'] = $this->reports_management_model->allvendorspecialproducts($data);
+		// echo "<pre>";var_dump($data['allvendor']);exit;
 		$this->load->view('vendor_special_products_report.php', $data);
 	}
 
