@@ -67,6 +67,7 @@ $route['distributor-my-order']  = "home/distributor_my_order";
 $route['distributor-customer-my-order']  = "home/distributor_customer_my_order";
 $route['distributor-wishlist']  = "home/distributor_wishlist";
 $route['distributor-my-inventory']  = "home/distributor_my_inventory";
+$route['distributor-monthly-order']  = "home/distributor_monthly_order";
 
 $route['vendor-my-inventory']  = "home/vendor_my_inventory";
 

@@ -215,7 +215,7 @@ $http_host = $this->config->item('http_host');
 
 
 
-            <li><a href="<?php echo $base_url; ?>special-products">Monthly Supplies</a></li>
+            <!-- <li><a href="<?php echo $base_url; ?>special-products">Monthly Supplies</a></li> -->
             <li><a href="<?php echo $base_url; ?>about-bpcl">About Us</a></li>
             <li><a href="<?php echo $base_url; ?>book-form" style="font-size:22px;" title="Pre Book Energy Efficient Hotplates"><i class="fa fa-cart-plus" aria-hidden="true"></i></a></li>
 

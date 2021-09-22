@@ -2708,7 +2708,8 @@ class Home_Model extends CI_Model
 			$pincode = '0';
 		}
 
-		$sql = "SELECT * FROM users where user_vendor = '2' and status='0' and FIND_IN_SET(" . $pincode . ",pincode)";
+		// $sql = "SELECT * FROM users where user_vendor = '2' and status='0' and FIND_IN_SET(" . $pincode . ",pincode)";
+		$sql = "SELECT * FROM users where user_vendor = '2' and status='0' and FIELD(" . $pincode . ",pincode)";
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
 			$result = $query->result();
@@ -4039,8 +4040,8 @@ class Home_Model extends CI_Model
 		$sql .= "group by o.order_id order by ci.order_id desc";
 
 		//echo $sql;
-		// var_dump($this->db->last_query());exit;
 		$query = $this->db->query($sql);
+		// var_dump($this->db->last_query());exit;
 		if ($query->num_rows() > 0) {
 			$order_list = $query->result_array();
 			foreach ($order_list as &$order) {
@@ -4361,5 +4362,11 @@ class Home_Model extends CI_Model
 			$order['sub_total'] = $total;
 		}
 		return $order_list;
+	}
+
+	public function getDistributorName($user_id)
+	{
+		$sql = $this->db->select("id, name")->from("users")->where("id", $user_id)->get()->result_array();
+		return $sql;
 	}
 }

@@ -879,7 +879,6 @@ class Billship extends CI_Controller
 		redirect($this->config->item('base_url') . 'Billship/customerthanks/' . $intOrderNumber);
 	}
 
-
 	function redirectPaymentGateway()
 	{ }
 

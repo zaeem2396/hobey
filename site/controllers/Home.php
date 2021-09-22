@@ -157,7 +157,7 @@ class Home extends CI_Controller
 		$data['all_collections'] = $this->home_model->all_collections();
 		$data['alldistributors'] = $this->home_model->spdistributors();
 		// echo "<pre>";
-		// var_dump($data);exit;
+		// var_dump($data['all_collections']);exit;
 		$this->load->view('customer/special_products', $data);
 	}
 
@@ -757,7 +757,7 @@ class Home extends CI_Controller
 		//echo $this->session->userdata("userid"); die;
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
-		//echo "<pre>"; var_dump($data['orders_list']); exit;
+		// echo "<pre>"; var_dump($data['orders_list']); exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
 	function deliveryboy_customer_my_order()
@@ -1482,5 +1482,14 @@ class Home extends CI_Controller
 		$data['profile'] = $this->account_model->getuserdata($data["orderdetails"][0]->user_id);
 		$html = $this->load->view('invoiceSp', $data, true);
 		echo $html;
+	}
+
+	function distributor_monthly_order() 
+	{
+		$data['all_collections'] = $this->home_model->all_collections();
+		$data['alldistributors'] = $this->home_model->spdistributors();
+		$data['distributorName'] = $this->home_model->getDistributorName($this->session->userdata('userid'));
+		// echo "<pre>";var_dump($data['distributorName']);exit;
+		$this->load->view('distributor_monthly_order', $data);
 	}
 }
