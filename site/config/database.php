@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+require_once FCPATH . 'env.php';
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
