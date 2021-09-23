@@ -1,5 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
+require_once FCPATH . 'env.php';
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -24,24 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['document_root']  = $_SERVER['DOCUMENT_ROOT'];
 
-// UNCOMMENT WHEN HOST ON LIVE SERVER
-
-// $config['http_host']	  = "https://".$_SERVER['HTTP_HOST']."/beta/";
-// $config['base_url']	      = "https://".$_SERVER['HTTP_HOST']."/beta/index.php/";
-// $config['front_base_url'] = "https://".$_SERVER['HTTP_HOST']."/beta/";
-// $config['base_url_views'] = "https://".$_SERVER['HTTP_HOST']."/beta/site/views/"; 
-// $config['upload']         = $_SERVER['DOCUMENT_ROOT'].'/beta/upload/';
-// $config['findex_url']     = "https://".$_SERVER['HTTP_HOST']."/beta/";
-
-
-// TEST LINKS 
-$config['http_host']	  = "http://".$_SERVER['HTTP_HOST']."/hobey/";
-$config['base_url']	      = "http://".$_SERVER['HTTP_HOST']."/hobey/index.php/";
-$config['front_base_url'] = "http://".$_SERVER['HTTP_HOST']."/hobey/";
-$config['base_url_views'] = "http://".$_SERVER['HTTP_HOST']."/hobey/site/views/"; 
-$config['upload']         = $_SERVER['DOCUMENT_ROOT'].'/hobey/upload/';
-$config['findex_url']     = "http://".$_SERVER['HTTP_HOST']."/hobey/";
-// TEST LINKS END
 
 
 
@@ -92,7 +75,7 @@ $config['index_page'] = 'index.php';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol']    = 'REQUEST_URI';
 
 /*
 |--------------------------------------------------------------------------
@@ -116,7 +99,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']    = 'english';
 
 /*
 |--------------------------------------------------------------------------
@@ -442,11 +425,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_prefix']    = '';
+$config['cookie_domain']    = '';
+$config['cookie_path']        = '/';
+$config['cookie_secure']    = FALSE;
+$config['cookie_httponly']     = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -563,3 +546,24 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+
+// UNCOMMENT WHEN HOST ON LIVE SERVER
+if (ENV == "prod") {
+    $config['http_host']      = "https://" . $_SERVER['HTTP_HOST'] . "/beta/";
+    $config['base_url']          = "https://" . $_SERVER['HTTP_HOST'] . "/beta/index.php/";
+    $config['front_base_url'] = "https://" . $_SERVER['HTTP_HOST'] . "/beta/";
+    $config['base_url_views'] = "https://" . $_SERVER['HTTP_HOST'] . "/beta/site/views/";
+    $config['upload']         = $_SERVER['DOCUMENT_ROOT'] . '/beta/upload/';
+    $config['findex_url']     = "https://" . $_SERVER['HTTP_HOST'] . "/beta/";
+} else {
+    // LOCAL LINKS 
+    $config['http_host']      = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/";
+    $config['base_url']          = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/index.php/";
+    $config['front_base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/";
+    $config['base_url_views'] = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/site/views/";
+    $config['upload']         = $_SERVER['DOCUMENT_ROOT'] . '/hobey/upload/';
+    $config['findex_url']     = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/";
+    // LOCAL LINKS END
+
+}

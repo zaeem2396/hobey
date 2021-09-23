@@ -96,5 +96,8 @@ $route['customer-support']  = "home/customer_support";
 
 $route['book-form']  = "home/book_form";
 
+// TEST
+$route['test'] = "home/test";
+
 $route['404_override'] = '';
 $route['scaffolding_trigger'] = "";

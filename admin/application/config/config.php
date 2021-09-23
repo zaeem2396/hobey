@@ -1,6 +1,6 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-
+defined('BASEPATH') or exit('No direct script access allowed');
+require_once FCPATH . 'env.php';
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -30,21 +30,25 @@ $config['front_base_url'] = "http://www.fiveonline.in/shemaroo/";
 $config['base_url_views'] = "http://www.fiveonline.in/shemaroo/admin/application/views/";
 $config['upload'] = $_SERVER['DOCUMENT_ROOT']."/shemaroo/upload/";*/
 
-// $config['document_root'] = $_SERVER['DOCUMENT_ROOT']."/beta/admin/";
-// $config['http_host']	= "https://".$_SERVER['HTTP_HOST']."/beta/admin/";
-// $config['base_url']	= "https://".$_SERVER['HTTP_HOST']."/beta/admin/index.php/";
-// $config['front_base_url'] = "https://".$_SERVER['HTTP_HOST']."/beta/";
-// $config['base_url_views'] = "https://".$_SERVER['HTTP_HOST']."/beta/admin/application/views/";
-// $config['upload'] = $_SERVER['DOCUMENT_ROOT']."/beta/upload/";
+if (ENV == "prod") {
+    $config['document_root'] = $_SERVER['DOCUMENT_ROOT'] . "/beta/admin/";
+    $config['http_host']    = "https://" . $_SERVER['HTTP_HOST'] . "/beta/admin/";
+    $config['base_url']    = "https://" . $_SERVER['HTTP_HOST'] . "/beta/admin/index.php/";
+    $config['front_base_url'] = "https://" . $_SERVER['HTTP_HOST'] . "/beta/";
+    $config['base_url_views'] = "https://" . $_SERVER['HTTP_HOST'] . "/beta/admin/application/views/";
+    $config['upload'] = $_SERVER['DOCUMENT_ROOT'] . "/beta/upload/";
+} else {
+    // FOR TESTING PURPOSE
+    $config['document_root'] = $_SERVER['DOCUMENT_ROOT'] . "/hobey/admin/";
+    $config['http_host']    = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/admin/";
+    $config['base_url']    = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/admin/index.php/";
+    $config['front_base_url'] = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/";
+    $config['base_url_views'] = "http://" . $_SERVER['HTTP_HOST'] . "/hobey/admin/application/views/";
+    $config['upload'] = $_SERVER['DOCUMENT_ROOT'] . "/hobey/upload/";
+}
 
 
-// FOR TESTING PURPOSE
-$config['document_root'] = $_SERVER['DOCUMENT_ROOT']."/hobey/admin/";
-$config['http_host']	= "http://".$_SERVER['HTTP_HOST']."/hobey/admin/";
-$config['base_url']	= "http://".$_SERVER['HTTP_HOST']."/hobey/admin/index.php/";
-$config['front_base_url'] = "http://".$_SERVER['HTTP_HOST']."/hobey/";
-$config['base_url_views'] = "http://".$_SERVER['HTTP_HOST']."/hobey/admin/application/views/";
-$config['upload'] = $_SERVER['DOCUMENT_ROOT']."/hobey/upload/";
+
 
 
 /*$config['admin_email']       = "patelnikul321@gmail.com";
@@ -86,7 +90,7 @@ $config['index_page'] = 'index.php';
 |
 | WARNING: If you set this to 'PATH_INFO', URIs will always be URL-decoded!
 */
-$config['uri_protocol']	= 'REQUEST_URI';
+$config['uri_protocol']    = 'REQUEST_URI';
 
 /*
 |--------------------------------------------------------------------------
@@ -110,7 +114,7 @@ $config['url_suffix'] = '';
 | than english.
 |
 */
-$config['language']	= 'english';
+$config['language']    = 'english';
 
 /*
 |--------------------------------------------------------------------------
@@ -434,11 +438,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_prefix']    = '';
+$config['cookie_domain']    = '';
+$config['cookie_path']        = '/';
+$config['cookie_secure']    = FALSE;
+$config['cookie_httponly']     = FALSE;
 
 /*
 |--------------------------------------------------------------------------

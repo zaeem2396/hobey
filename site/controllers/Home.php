@@ -1493,4 +1493,9 @@ class Home extends CI_Controller
 		// echo "<pre>";var_dump($data['distributorName']);exit;
 		$this->load->view('distributor_monthly_order', $data);
 	}
+
+	function test() 
+	{
+		var_dump(env("ENV"));
+	}
 }
