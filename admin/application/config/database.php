@@ -78,7 +78,7 @@ $db['default'] = array(
 	'hostname' => '139.162.48.128',
 	'username' => 'hobey_bpcl',
 	'password' => 'bpcl@123$%321',
-	'database' => 'hobey_bpcl' . ENV === 'dev' ? 'dev' : '',
+	'database' => 'hobey_bpcl' . (ENV === 'dev' ? 'dev' : ''),
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
