@@ -2733,6 +2733,9 @@ class Home_Model extends CI_Model
 
 	function allproductCollection($ids)
 	{
+		if (!$ids) {
+			return [];
+		}
 		$sql = "SELECT * FROM product where id IN(" . $ids . ") and is_deleted = 0 and status = 0 order by material_name ASC";
 		$query = $this->db->query($sql);
 		if ($query->num_rows() > 0) {
