@@ -876,7 +876,8 @@ class Billship extends CI_Controller
 		mail($to, $subject, $message, $headers);
 
 		$this->cart->destroy();
-		redirect($this->config->item('base_url') . 'Billship/customerthanks/' . $intOrderNumber);
+		// redirect($this->config->item('base_url') . 'Billship/customerthanks/' . $intOrderNumber);
+		redirect($this->config->item('base_url') . 'home/distributor_customer_my_order');
 	}
 
 	function redirectPaymentGateway()
