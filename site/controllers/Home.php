@@ -1484,7 +1484,7 @@ class Home extends CI_Controller
 		echo $html;
 	}
 
-	function distributor_monthly_order() 
+	function distributor_monthly_order()
 	{
 		// var_dump($this->config->item('base_url'));exit;
 		$data['all_collections'] = $this->home_model->all_collections();
@@ -1494,8 +1494,8 @@ class Home extends CI_Controller
 		$this->load->view('distributor_monthly_order', $data);
 	}
 
-	function test() 
+	function test()
 	{
-		var_dump(env("ENV"));
+		var_dump("this is a test controller");
 	}
 }
