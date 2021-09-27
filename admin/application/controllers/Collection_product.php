@@ -1248,7 +1248,6 @@ Team Happy Soul</p><br>
 					if ($obj_insData == '' && count($obj_insData) == '0') {
 						// continue;
 					} else {
-
 						$material_name = addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue());
 						$vendorname = addslashes($PHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue());
 						$weight = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
