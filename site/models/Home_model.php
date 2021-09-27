@@ -4196,7 +4196,7 @@ class Home_Model extends CI_Model
 		$sql = "SELECT p.*,item.user_info_id FROM product p 
 		INNER JOIN ci_order_item item ON item.product_id  = p.id  and item.is_customer = 0 
 		LEFT JOIN users as users ON users.id = item.user_info_id 
-		where p.id <> 0 and p.is_deleted = 0 and p.status = 0 and p.featured = '1' and FIND_IN_SET(" . $pincode . ",users.pincode) ";
+		where p.id <> 0 and p.is_deleted = 0 and p.status = 0 and p.featured = '1' and FIELD(" . $pincode . ",users.pincode) ";
 
 		$sql .=  " GROUP BY p.id ORDER BY p.id desc LIMIT 4";
 

@@ -51,7 +51,7 @@
                                     </div>
                                     <div class="form-group">
                                         <input class="submit btn bg-purple pull-right" type="submit" value="Submit" onclick="javascript:validate();return false;" />
-                                        <a href="<?php echo $base_url; ?>collection_product/lists" class="submit btn bg-purple pull-right" style="margin-right: 10px;" />Cancel</a>
+                                        <a href="<?php echo $base_url; ?>collection_product/lists" class="submit btn bg-purple pull-right" style="margin-right: 10px;">Cancel</a>
                                     </div>
                                 </form>
                             </div>
@@ -76,6 +76,7 @@
         }
         $('#form').submit();
     }
+
     function numbersonly(e) {
         var unicode = e.charCode ? e.charCode : e.keyCode
         if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
