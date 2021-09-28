@@ -1224,7 +1224,9 @@ Team Happy Soul</p><br>
 
 	public function xlsuploadcproducts()
 	{
-
+		// ini_set('display_errors', 1);
+		// ini_set('display_startup_errors', 1);
+		// error_reporting(E_ALL);
 		ini_set('memory_limit', -1);
 		if ($this->input->post('action') == 'add_XLS') {
 			$data['error'] = '';
@@ -1248,14 +1250,15 @@ Team Happy Soul</p><br>
 					if ($obj_insData == '' && count($obj_insData) == '0') {
 						// continue;
 					} else {
+
 						$material_name = addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue());
 						$vendorname = addslashes($PHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue());
 						$weight = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
 						$quantity = addslashes($PHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue());
 						$mrp = addslashes($PHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue());
 						$price = addslashes($PHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue());
-						$city_id = addslashes($PHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue());
-						$d_buy_price = addslashes($PHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue());
+						$d_buy_price = addslashes($PHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue());
+						$city_id = addslashes($PHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue());
 
 						$data = array(
 							'material_name'    => $material_name,
@@ -1265,8 +1268,8 @@ Team Happy Soul</p><br>
 							'quantity'       => $quantity,
 							'mrp'    => $mrp,
 							'price'   => $price,
-							'city_id'   => $city_id,
-							'd_buy_price'   => $d_buy_price
+							'd_buy_price'   => $d_buy_price,
+							'city_id'   => $city_id
 						);
 
 						if ($data['material_name'] != '') {

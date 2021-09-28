@@ -758,7 +758,7 @@ class Home extends CI_Controller
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
 		// echo "<pre>";
-		// var_dump($data['allDeliveryBoys']);
+		// var_dump($data['orders_list']);
 		// exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
@@ -1498,6 +1498,18 @@ class Home extends CI_Controller
 
 	function test()
 	{
-		var_dump("this is a test controller");
+		$data['err_msg'] = '';
+		$status = $this->input->get('status');
+		$statuss = '';
+		if ($status) {
+			$statuss = $status;
+		}
+		//echo $this->session->userdata("userid"); die;
+		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
+		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
+		// echo "<pre>";
+		// var_dump($data['orders_list']);
+		// exit;
+		$this->load->view('distributor_customer_my_order', $data);
 	}
 }

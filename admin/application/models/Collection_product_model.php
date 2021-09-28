@@ -131,8 +131,8 @@ class Collection_product_model extends CI_Model
 
 		$data['mrp'] = $content['mrp'];
 		$data['vendorname'] = $content['vendorname'];
-		$data['city_id'] = $content['city_id'];
 		$data['d_buy_price'] = $content['d_buy_price'];
+		$data['city_id'] = $content['city_id'];
 
 		$data['added_date'] = date("Y-m-d");
 		$this->_data = $data;
