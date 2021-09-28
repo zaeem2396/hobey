@@ -1,60 +1,56 @@
-<?php include('include/header.php');?>
+<?php include('include/header.php'); ?>
 <!-- Start: Main -->
 <div id="main">
-    <?php include('include/sidebar_left.php');?>
+    <?php include('include/sidebar_left.php'); ?>
     <!-- Start: Content -->
     <!-- Start: Content -->
     <section id="content_wrapper">
         <div id="topbar">
             <div class="topbar-left">
                 <ol class="breadcrumb">
-                    <li class="crumb-icon"><a href="<?php echo $base_url; ?>"><span
-                                class="glyphicon glyphicon-home"></span></a></li>
+                    <li class="crumb-icon"><a href="<?php echo $base_url; ?>"><span class="glyphicon glyphicon-home"></span></a></li>
                     <li class="crumb-active"><a href="#">Order Management</a></li>
                 </ol>
             </div>
         </div>
         <div id="content">
             <div class="row">
-                <?php if($this->session->flashdata('L_strErrorMessage'))
-            { ?>
-                <div class="alert alert-success alert-dismissable">
-                    <i class="fa fa-check"></i>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <b>Success!</b> <?php echo $this->session->flashdata('L_strErrorMessage',5); ?>
-                </div>
+                <?php if ($this->session->flashdata('L_strErrorMessage')) { ?>
+                    <div class="alert alert-success alert-dismissable">
+                        <i class="fa fa-check"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <b>Success!</b> <?php echo $this->session->flashdata('L_strErrorMessage', 5); ?>
+                    </div>
                 <?php }
-            ?>
-                <?php if($this->session->flashdata('flashError')!='') { ?>
-                <div class="alert alert-danger alert-dismissable">
-                    <i class="fa fa-warning"></i>
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <b>Error!</b> <?php echo $this->session->flashdata('flashError',5); ?>
-                </div>
+                ?>
+                <?php if ($this->session->flashdata('flashError') != '') { ?>
+                    <div class="alert alert-danger alert-dismissable">
+                        <i class="fa fa-warning"></i>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <b>Error!</b> <?php echo $this->session->flashdata('flashError', 5); ?>
+                    </div>
                 <?php }  ?>
                 <div class="col-md-12">
-                    <form action="<?php echo $base_url."orders/download_specialcustomer";?>" method="post"
-                        enctype="multipart/form-data">
+                    <form action="<?php echo $base_url . "orders/download_specialcustomer"; ?>" method="post" enctype="multipart/form-data">
                         <input type="hidden" value="<?php echo $startdate; ?>" id="startdate1" name="startdate">
                         <input type="hidden" value="<?php echo $enddate; ?>" id="enddate1" name="enddate">
-                        <input type="hidden" value="<?php echo $distributor_id; ?>" id="distributor_id1"
-                            name="distributor_id">
+                        <input type="hidden" value="<?php echo $distributor_id; ?>" id="distributor_id1" name="distributor_id">
                         <input class="submit btn btn-alert pull-right " type="submit" value="Download Report">
                     </form>
                 </div>
                 <!-- <div class="col-md-12">
-            <a href="<?php echo $base_url;?>orders/lists/SUCCESS" class="btn btn-alert pull-right" style="margin-left:10px"> Payment Success</a>
-            <a href="<?php echo $base_url;?>orders/lists/FAILED" class="btn btn-alert pull-right" style="margin-left:10px"> Payment Failed</a>
+            <a href="<?php echo $base_url; ?>orders/lists/SUCCESS" class="btn btn-alert pull-right" style="margin-left:10px"> Payment Success</a>
+            <a href="<?php echo $base_url; ?>orders/lists/FAILED" class="btn btn-alert pull-right" style="margin-left:10px"> Payment Failed</a>
             
-            <a href="<?php echo $base_url;?>orders/lists/C" class="btn btn-alert pull-right" style="margin-left:10px"> Canceled</a>
+            <a href="<?php echo $base_url; ?>orders/lists/C" class="btn btn-alert pull-right" style="margin-left:10px"> Canceled</a>
             
-            <a href="<?php echo $base_url;?>orders/lists/D" class="btn btn-alert pull-right" style="margin-left:10px"> Delivered</a>
+            <a href="<?php echo $base_url; ?>orders/lists/D" class="btn btn-alert pull-right" style="margin-left:10px"> Delivered</a>
             
-            <a href="<?php echo $base_url;?>orders/lists/S" class="btn btn-alert pull-right" style="margin-left:10px"> Shipped</a>
+            <a href="<?php echo $base_url; ?>orders/lists/S" class="btn btn-alert pull-right" style="margin-left:10px"> Shipped</a>
             
-            <a href="<?php echo $base_url;?>orders/lists/P" class="btn btn-alert pull-right" style="margin-left:10px"> Pending</a>
+            <a href="<?php echo $base_url; ?>orders/lists/P" class="btn btn-alert pull-right" style="margin-left:10px"> Pending</a>
             
-            <a href="<?php echo $base_url;?>orders/lists/" class="btn btn-alert pull-right" > All</a>
+            <a href="<?php echo $base_url; ?>orders/lists/" class="btn btn-alert pull-right" > All</a>
             
             </div> -->
                 <div class="clearfix">&nbsp;</div>
@@ -68,47 +64,71 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel">
-                        <div class="panel-heading"> <span class="panel-title"> <span
-                                    class="glyphicon glyphicon-search"></span>Search Order </span> </div>
+                        <div class="panel-heading"> <span class="panel-title"> <span class="glyphicon glyphicon-search"></span>Search Order </span> </div>
                         <div class="panel-body">
-                            <form action="<?php echo $base_url."orders/lists_specialcustomer";?>" method="post"
-                                enctype="multipart/form-data">
+                            <form action="<?php echo $base_url . "orders/lists_specialcustomer"; ?>" method="post" enctype="multipart/form-data">
                                 <div class="form-group col-md-2 rpm sd">
                                     <label for="categoryname">Start Date</label>
-                                    <input id="startdate" name="startdate" class="form-control" autocomplete="off"
-                                        value="<?php echo $startdate; ?>" type="text" placeholder="Select Date" />
+                                    <input id="startdate" name="startdate" class="form-control" autocomplete="off" value="<?php echo $startdate; ?>" type="text" placeholder="Select Date" />
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <div class="form-group col-md-2 rpm ed">
                                     <label for="categoryname">End Date</label>
-                                    <input id="enddate" name="enddate" class="form-control" autocomplete="off"
-                                        value="<?php echo $enddate; ?>" type="text" placeholder="Select Date" />
+                                    <input id="enddate" name="enddate" class="form-control" autocomplete="off" value="<?php echo $enddate; ?>" type="text" placeholder="Select Date" />
                                     <i class="fa fa-calendar" aria-hidden="true"></i>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="distributor_id">Distributor</label>
                                     <select id="distributor_id" name="distributor_id" class="form-control">
                                         <option selected value="">Select Distributor</option>
-                                        <?php if($alldistributors !='')
-                                             {
-                                                foreach($alldistributors as $distributorshow)
-                                                { ?>
-                                        <option value="<?php echo $distributorshow->id; ?>"
-                                            <?php if($distributor_id == $distributorshow->id ) { echo "selected"; } ?>>
-                                            <?php echo $distributorshow->name; ?></option>
-                                        <?php } } ?>
+                                        <?php if ($alldistributors != '') {
+                                            foreach ($alldistributors as $distributorshow) { ?>
+                                                <option value="<?php echo $distributorshow->id; ?>" <?php if ($distributor_id == $distributorshow->id) {
+                                                                                                                echo "selected";
+                                                                                                            } ?>>
+                                                    <?php echo $distributorshow->name; ?></option>
+                                        <?php }
+                                        } ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="state_id">State</label>
+                                    <select id="state_id" name="state_id" class="form-control">
+                                        <option selected value="">Select State</option>
+                                        <?php if ($allstate != '') {
+                                            foreach ($allstate as $stateshow) { ?>
+                                                <option value="<?php echo $stateshow->name; ?>" <?php if ($state_id == $stateshow->name) {
+                                                                                                            echo "selected";
+                                                                                                        } ?>>
+                                                    <?php echo $stateshow->name; ?></option>
+                                        <?php }
+                                        } ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label for="district_id">District</label>
+                                    <select id="district_id" name="district_id" class="form-control">
+                                        <option selected value="">Select District</option>
+                                        <?php if ($alldistrict != '') {
+                                            foreach ($alldistrict as $districtshow) { ?>
+                                                <option value="<?php echo $districtshow->name; ?>" <?php if ($district_id == $districtshow->name) {
+                                                                                                                echo "selected";
+                                                                                                            } ?>>
+                                                    <?php echo $districtshow->name; ?></option>
+                                        <?php }
+                                        } ?>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-1">
                                     <label for="inputEmail" style="visibility:hidden">&nbsp;</label><br>
-                                    <input class="submit btn bg-purple2 " type="submit" value="Search"
-                                        style="width:100%">
+                                    <input class="submit btn bg-purple2 " type="submit" value="Search" style="width:100%">
                                 </div>
                                 <div class="form-group col-md-1">
                                     <label for="inputEmail" style="visibility:hidden">&nbsp;</label><br>
-                                    <a href="<?php echo $base_url;?>orders/lists_specialcustomer"
-                                        class="submit btn bg-purple2" style="width:100%">Reset</a>
+                                    <a href="<?php echo $base_url; ?>orders/lists_specialcustomer" class="submit btn bg-purple2" style="width:100%">Reset</a>
                                 </div>
                             </form>
                         </div>
@@ -118,12 +138,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel">
-                        <div class="panel-heading"> <span class="panel-title"> <span
-                                    class="glyphicon glyphicon-list-alt"></span>Order List</span> </div>
+                        <div class="panel-heading"> <span class="panel-title"> <span class="glyphicon glyphicon-list-alt"></span>Order List</span> </div>
                         <div class="panel-body">
-                            <form action="<?php echo $base_url."orders/deleteOrders";?>" id="order_list_form"
-                                method="post" enctype="multipart/form-data" id="form">
-                                <INPUT TYPE="hidden" NAME="hidPgRefRan" VALUE="<?php echo rand();?>">
+                            <form action="<?php echo $base_url . "orders/deleteOrders"; ?>" id="order_list_form" method="post" enctype="multipart/form-data" id="form">
+                                <INPUT TYPE="hidden" NAME="hidPgRefRan" VALUE="<?php echo rand(); ?>">
                                 <div class="table-responsive">
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
@@ -145,89 +163,77 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                 if (isset($orders_list) and count($orders_list)) {
-                                 foreach ($orders_list as $key => $orders) {
-                                     //echo "<pre>";
-                                     //print_r($orders); die;
-                                 ?>
-                                            <tr>
-                                                <!-- <td><input name="selected[]" id="selected[]" value="<?php echo $orders['order_id']; ?>" type="checkbox"  class="minimal-red"></td> -->
-                                                <td><?php echo $orders['order_id']; ?><input type="hidden"
-                                                        name="order_id" value="<?php echo $orders['order_id']; ?>"></td>
-                                                <td style="text-align:left"><?php
-                                 $order_date = strtotime( $orders['cdate'] );
-								 echo $mysqldate = date( 'F d, Y', $order_date );?></td>
-                                                <td style="text-align:left">
-                                                    <?php echo $this->orders_model->getUsername($orders['distributor_id']); ?>
-                                                </td>
-                                                <td style="text-align:left">
-                                                    <?php 
-                                                   $stateID = $this->orders_model->getUsersid($orders['distributor_id']); 
-                                                   echo $this->orders_model->getStatenamedisply($stateID); 
+                                            if (isset($orders_list) and count($orders_list)) {
+                                                foreach ($orders_list as $key => $orders) {
+                                                    //echo "<pre>";
+                                                    //print_r($orders); die;
                                                     ?>
-                                                </td>
-                                                <td style="text-align:left">
-                                                    <?php 
-                                                    $cityID = $this->orders_model->getUsercid($orders['distributor_id']); 
-                                                   echo $this->orders_model->getDistnamedisply($cityID); 
-                                                    ?>
-                                                </td>
-                                                <td style="text-align:left"><?php echo $orders['first_name']; ?></td>
-                                                <td><?php echo $orders['phone_number']; ?></td>
-                                                <td style="text-align:right">Rs.
-                                                    <?php echo number_format($orders['order_total'],false,'',''); ?>
-                                                </td>
+                                                    <tr>
+                                                        <!-- <td><input name="selected[]" id="selected[]" value="<?php echo $orders['order_id']; ?>" type="checkbox"  class="minimal-red"></td> -->
+                                                        <td><?php echo $orders['order_id']; ?><input type="hidden" name="order_id" value="<?php echo $orders['order_id']; ?>"></td>
+                                                        <td style="text-align:left"><?php
+                                                                                            $order_date = strtotime($orders['cdate']);
+                                                                                            echo $mysqldate = date('F d, Y', $order_date); ?></td>
+                                                        <td style="text-align:left">
+                                                            <?php echo $this->orders_model->getUsername($orders['distributor_id']); ?>
+                                                        </td>
+                                                        <td style="text-align:left">
+                                                            <?php
+                                                                    $stateID = $this->orders_model->getUsersid($orders['distributor_id']);
+                                                                    echo $this->orders_model->getStatenamedisply($stateID);
+                                                                    ?>
+                                                        </td>
+                                                        <td style="text-align:left">
+                                                            <?php
+                                                                    $cityID = $this->orders_model->getUsercid($orders['distributor_id']);
+                                                                    echo $this->orders_model->getDistnamedisply($cityID);
+                                                                    ?>
+                                                        </td>
+                                                        <td style="text-align:left"><?php echo $orders['first_name']; ?></td>
+                                                        <td><?php echo $orders['phone_number']; ?></td>
+                                                        <td style="text-align:right">Rs.
+                                                            <?php echo number_format($orders['order_total'], false, '', ''); ?>
+                                                        </td>
 
-                                                <!-- td> 
+                                                        <!-- td> 
                                      
-                                     <?php //echo $orders['payment_status']; ?>
+                                     <?php //echo $orders['payment_status']; 
+                                                ?>
                                  </td>
-								 <td><?php //echo $orders['transactionid']; ?></td -->
+								 <td><?php //echo $orders['transactionid']; 
+                                                ?></td -->
 
-                                                <!-- <td> <?php if($orders['order_status'] == 'P')
-                                    {
-                                    	echo 'Pending';					
-                                    }
-                                    else if($orders['order_status'] == 'R')
-                                    {
-                                    echo 'Processing';	
-                                    } 
-                                    else if($orders['order_status'] == 'S')
-                                    {
-                                    echo 'Shipped';	
-                                    } 
-                                    else if($orders['order_status'] == 'D')
-                                    {
-                                    echo 'Delivered';	
-                                    } else 
-                                    {
-                                    	echo 'Canceled';	
-                                    }
-                                    	?> 
+                                                        <!-- <td> <?php if ($orders['order_status'] == 'P') {
+                                                                                echo 'Pending';
+                                                                            } else if ($orders['order_status'] == 'R') {
+                                                                                echo 'Processing';
+                                                                            } else if ($orders['order_status'] == 'S') {
+                                                                                echo 'Shipped';
+                                                                            } else if ($orders['order_status'] == 'D') {
+                                                                                echo 'Delivered';
+                                                                            } else {
+                                                                                echo 'Canceled';
+                                                                            }
+                                                                            ?> 
                                     </td>  -->
-                                                <td class="text-center">
-                                                    <a class="btn bg-purple2"
-                                                        href="<?php echo $base_url.'orders/detail1/'.$orders['order_id']?>"
-                                                        title="Detail">
-                                                        <i class="fa fa-eye"> Details</i>
-                                                    </a>&nbsp;
-                                                    <a class="btn bg-purple2" style="background-color:red;"
-                                                        href="javascript:void(0);"
-                                                        onclick="delete_order(<?php echo $orders['order_id']; ?>);"
-                                                        title="Delete">
-                                                        <i class="fa fa-trash-o"> Delete</i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                                        <td class="text-center">
+                                                            <a class="btn bg-purple2" href="<?php echo $base_url . 'orders/detail1/' . $orders['order_id'] ?>" title="Detail">
+                                                                <i class="fa fa-eye"> Details</i>
+                                                            </a>&nbsp;
+                                                            <a class="btn bg-purple2" style="background-color:red;" href="javascript:void(0);" onclick="delete_order(<?php echo $orders['order_id']; ?>);" title="Delete">
+                                                                <i class="fa fa-trash-o"> Delete</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
                                             <?php
-                                 }
-                                 } else {
-                                  //echo 'No Orders Available.';
-                                 }
+                                                }
+                                            } else {
+                                                //echo 'No Orders Available.';
+                                            }
 
 
 
-                                 ?>
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -239,15 +245,14 @@
             </div>
         </div>
     </section>
-    <?php include('include/sidebar_right.php');?>
+    <?php include('include/sidebar_right.php'); ?>
 </div>
 <!-- End #Main -->
-<?php include('include/footer.php')?>
+<?php include('include/footer.php') ?>
 
 
 <!-- DATA TABES SCRIPT -->
-<link href="<?php echo $base_url_views; ?>plugins/datatables/dataTables.bootstrap.css" rel="stylesheet"
-    type="text/css" />
+<link href="<?php echo $base_url_views; ?>plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <script src="<?php echo $base_url_views; ?>plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 <script src="<?php echo $base_url_views; ?>plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript">
 </script>
@@ -257,91 +262,91 @@
 <!-- page script -->
 <script type="text/javascript" src="<?php echo $base_url_views; ?>js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
-$(function() {
-    $('#example1').dataTable({
-        "bPaginate": true,
-        "bLengthChange": true,
-        "bFilter": true,
-        "bSort": true,
-        "bInfo": true,
-        "bAutoWidth": false,
-        "bStateSave": true,
-        "fnStateSave": function(oSettings, oData) {
-            localStorage.setItem('offersDataTables', JSON.stringify(oData));
-        },
-        "fnStateLoad": function(oSettings) {
-            return JSON.parse(localStorage.getItem('offersDataTables'));
-        }
-    });
+    $(function() {
+        $('#example1').dataTable({
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false,
+            "bStateSave": true,
+            "fnStateSave": function(oSettings, oData) {
+                localStorage.setItem('offersDataTables', JSON.stringify(oData));
+            },
+            "fnStateLoad": function(oSettings) {
+                return JSON.parse(localStorage.getItem('offersDataTables'));
+            }
+        });
 
-    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-        checkboxClass: 'icheckbox_minimal-red',
-        radioClass: 'iradio_minimal-red'
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass: 'iradio_minimal-red'
+        });
+        $('#startdate').datepicker();
+        $('#enddate').datepicker();
     });
-    $('#startdate').datepicker();
-    $('#enddate').datepicker();
-});
 </script>
 
 
 <script>
-function deletecountry() {
-    var checked = $("#form input:checked").length > 0;
-    if (!checked) {
-        alert("Please select at least one record to delete");
-        return false;
-    } else {
-        var conf = confirm("Do you want to delete?");
+    function deletecountry() {
+        var checked = $("#form input:checked").length > 0;
+        if (!checked) {
+            alert("Please select at least one record to delete");
+            return false;
+        } else {
+            var conf = confirm("Do you want to delete?");
+            if (conf == true) {
+                $('#form').submit();
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+    }
+
+    function statust(order_id, status) {
+        var conf = confirm("Are you sure want to change Status ?");
         if (conf == true) {
-            $('#form').submit();
+            var base_url = '<?php echo $base_url . 'orders/changeStatusmail'; ?>';
+            window.location = base_url + "/" + order_id + "/" + status;
             return true;
         } else {
             return false;
         }
 
     }
-
-}
-
-function statust(order_id, status) {
-    var conf = confirm("Are you sure want to change Status ?");
-    if (conf == true) {
-        var base_url = '<?php echo $base_url.'orders/changeStatusmail'; ?>';
-        window.location = base_url + "/" + order_id + "/" + status;
-        return true;
-    } else {
-        return false;
-    }
-
-}
 </script>
 
 <script>
-function delete_order(order_id) {
+    function delete_order(order_id) {
 
-    var conf = confirm("Do you want to delete?");
+        var conf = confirm("Do you want to delete?");
 
-    if (conf == true) {
+        if (conf == true) {
 
-        $.ajax({
-            url: '<?php echo $base_url; ?>orders/deleteOrders',
-            type: 'POST',
-            data: {
-                'order_id': order_id
-            },
-            success: function(msg) {
-                if (msg == "Deleted") {
-                    location.reload();
+            $.ajax({
+                url: '<?php echo $base_url; ?>orders/deleteOrders',
+                type: 'POST',
+                data: {
+                    'order_id': order_id
+                },
+                success: function(msg) {
+                    if (msg == "Deleted") {
+                        location.reload();
+                    }
                 }
-            }
-        });
-        return true;
+            });
+            return true;
 
-    } else {
+        } else {
 
-        return false;
+            return false;
+
+        }
 
     }
-
-}
 </script>

@@ -125,9 +125,13 @@ class Orders extends CI_Controller
         $this->data['startdate'] = $startdate = $this->input->post('startdate');
         $this->data['enddate'] = $enddate = $this->input->post('enddate');
         $this->data['distributor_id'] = $distributor_id = $this->input->post('distributor_id');
-
+        $this->data['state_id'] = $state_id = $this->input->post('state_id');
+        $this->data['district_id'] = $district_id = $this->input->post('district_id');
         $this->data['alldistributors'] = $this->orders_model->alldistributors();
-        $this->data['orders_list'] = $this->orders_model->getspecialOrdersCustomer($id = '', $status, $startdate, $enddate, $distributor_id);
+        $this->data['allstate'] = $this->orders_model->allstate();
+        $this->data['alldistrict'] = $this->orders_model->alldistrict();
+        $this->data['orders_list'] = $this->orders_model->getspecialOrdersCustomer($id = '', $status, $startdate, $enddate, $distributor_id, $state_id, $district_id);
+        // var_dump($this->data['orders_list']);
         $this->load->view('lists_specialcustomer', $this->data);
     }
 
