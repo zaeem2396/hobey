@@ -303,7 +303,6 @@ class Reports_management extends CI_Controller
 
 	function distributor_special_report()
 	{
-
 		$this->load->library('pagination');
 		$url_to_paging = $this->config->item('base_url');
 
@@ -330,6 +329,10 @@ class Reports_management extends CI_Controller
 		$data['Sdistributor'] = $this->reports_management_model->Sdistributor();
 		$data['alldistributor'] = $this->reports_management_model->alldistributor($data);
 		$data['allvendor'] = $this->reports_management_model->allvendorspecialproducts($data);
+		$data['test'] = $this->reports_management_model->get_alldistrspecialproducts_bkup();
+		// echo "<pre>";
+		// var_dump($data['test']);
+		// exit;
 		$this->load->view('distributor_special_report.php', $data);
 	}
 

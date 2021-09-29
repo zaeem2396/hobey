@@ -244,7 +244,7 @@ $http_host = $this->config->item('http_host');
                                                 // echo "<pre>";print_r($order);echo "</pre>";
                                                 ?>
 
-                                                <div class="row mb-15">
+                                                <div class="row mb-15" id="orderSectionReload">
                                                     <div class="col-md-12 clearfix">
                                                         <div class="accordion-heading font-size-14">
                                                             <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">Order Number #<?php echo $order['order_id'] ?></a>
@@ -284,7 +284,7 @@ $http_host = $this->config->item('http_host');
                                                                     </div>
 
                                                                     <?php foreach ($order['items'] as $item) { ?>
-                                                                        <div class="col-xs-12 text-xs-center padding-none">
+                                                                        <div class="col-xs-12 text-xs-center padding-none" id="order-item-id-<?= $item['order_item_id'] ?>">
                                                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 mb-15 text-xs-center padding-none">
                                                                                 <?php
                                                                                             $product_detail = $this->vendor_model->get_product($item['product_id']);
@@ -339,6 +339,12 @@ $http_host = $this->config->item('http_host');
                                                                                                                                 echo "Selected";
                                                                                                                             } ?>>Delivered</option>
                                                                                     </select>
+                                                                                    <!-- Edit order -->
+                                                                                    <button type="button" class="btn btn-primary btn-lg" style="display: none;" data-toggle="modal" data-target="#flipFlop">
+                                                                                        <i class="fa fa-pencil"></i>
+                                                                                    </button>
+                                                                                    <!-- Delete order -->
+                                                                                    <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                                                                                 <?php } ?>
                                                                                 <section class="font-size-18 ">Delivered To</section>
                                                                                 <section class=""><?php echo $order['first_name']; ?> <?php echo $order['last_name']; ?></section>
@@ -348,7 +354,9 @@ $http_host = $this->config->item('http_host');
 
                                                                     <?php } ?>
 
-                                                                    <div class="col-xs-12 padding-10 text-center bg-red font-size-20 mb-30"> <i class="fa fa-minus" aria-hidden="true"></i> Total <i class="fa fa-inr"></i> <?php echo number_format($order['order_total']); ?> <i class="fa fa-minus" aria-hidden="true"></i> </div>
+                                                                    <div id="priceReloadSection">
+                                                                        <div class="col-xs-12 padding-10 text-center bg-red font-size-20 mb-30"> <i class="fa fa-minus" aria-hidden="true"></i> Total <i class="fa fa-inr"></i> <?php echo number_format($order['order_total']); ?> <i class="fa fa-minus" aria-hidden="true"></i> </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -368,10 +376,39 @@ $http_host = $this->config->item('http_host');
             </div>
         </div>
         </div>
+        <!-- edit modal -->
+        <!-- edit modal ends -->
     </section>
 
     <?php include('includes/footer.php'); ?>
+
     <script>
+        const deleteOrder = (e) => {
+            let order_item_id = e.getAttribute("data-orderItemId")
+            let order_id = e.getAttribute("data-orderId")
+            let product_item_price = e.getAttribute("data-price")
+            let url = '<?php echo $base_url; ?>'
+            if (confirm("Are you sure ?")) {
+                $.ajax({
+                    url: `${url}/home/deleteOrder`,
+                    type: 'POST',
+                    data: {
+                        order_item_id: order_item_id,
+                        order_id: order_id, //for updating total
+                        product_item_price: product_item_price //for price update
+                    },
+                    success: function(response) {
+                        // return console.log(response);
+                        let data = JSON.parse(response)
+                        if (data.status === 200) {
+                            $(`#order-item-id-${order_item_id}`).remove()
+                            $("#orderSectionReload").load(location.href + " #orderSectionReload");
+                        }
+                    }
+                })
+            }
+        }
+
         function change_order_status(status, order_item_id, orderid, oldVlaue) {
             var box = document.getElementById('change_status_' + orderid);
             var conf = confirm("Are you sure want to change Status ?");

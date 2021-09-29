@@ -1512,4 +1512,18 @@ class Home extends CI_Controller
 		// exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
+
+	function deleteOrder()
+	{
+		$order_item_id = $this->input->post("order_item_id"); //to delete order
+		$order_id = $this->input->post("order_id"); //to update price
+		$product_item_price = $this->input->post("product_item_price");
+		$order_total = $this->db->select("order_total")->from("ci_orders")->where("order_number", $order_id)->get()->result_array();
+		$new_order_total = $order_total[0]['order_total'] - $product_item_price;
+		if ($this->db->where("order_item_id", $order_item_id)->delete("ci_order_item") && $this->db->query("update ci_orders set order_total='$new_order_total' where order_number='$order_id'")) {
+			echo json_encode(["status" => 200]);
+		} else {
+			echo json_encode(["status" => 500]);
+		}
+	}
 }

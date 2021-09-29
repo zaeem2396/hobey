@@ -528,8 +528,23 @@ where o.payment_status = '1' and ( select count(*) from ci_order_item where orde
 		$sql = "SELECT ci.* from ci_order_item ci
 		inner join ci_orders o ON o.order_id = ci.order_id
 		where ci.is_customer = 2 and ci.product_id = '" . $id . "' and ci.distributor_id = '" . $disid . "'";
-
 		$query = $this->db->query($sql);
+		// var_dump($this->db->last_query());
+		// exit;
+		if ($query->num_rows() > 0) {
+			$result = $query->result();
+			return $result;
+		}
+	}
+
+	function get_alldistrspecialproducts_bkup()
+	{
+		$sql = "SELECT ci.* from ci_order_item ci
+		inner join ci_orders o ON o.order_id = ci.order_id
+		where ci.is_customer = 2";
+		$query = $this->db->query($sql);
+		// var_dump($this->db->last_query());
+		// exit;
 		if ($query->num_rows() > 0) {
 			$result = $query->result();
 			return $result;
