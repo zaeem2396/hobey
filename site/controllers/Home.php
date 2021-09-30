@@ -1526,4 +1526,14 @@ class Home extends CI_Controller
 			echo json_encode(["status" => 500]);
 		}
 	}
+
+	function deleteCompleteOrder()
+	{
+		$orderId = $this->input->post("orderId");
+		if ($this->db->where("order_id", $orderId)->delete("ci_orders") && $this->db->where("order_id", $orderId)->delete("ci_order_item")) {
+			echo json_encode(["status" => 200]);
+		} else {
+			echo json_encode(["status" => 500]);
+		}
+	}
 }

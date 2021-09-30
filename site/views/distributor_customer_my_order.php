@@ -259,13 +259,10 @@ $http_host = $this->config->item('http_host');
                                                                         <?php } else { ?>
                                                                             <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
                                                                         <?php } ?>
+                                                                        <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-danger">Delete complete order</button>
+
                                                                     </div>
                                                                     <div class="col-xs-12 col-md-6 col-md-push-6 text-xs-center text-sm-center text-right mb-15 padding-none">
-                                                                        <!-- <p>                                             
-                                              <button type="submit" class="btn grey-btn-samll">Cancel Order <i class="fa fa-times" aria-hidden="true"></i></button>
-                                            </p> -->
-                                                                        <?php //echo "<pre>";print_r($allDeliveryBoys);echo "</pre>"; 
-                                                                                ?>
                                                                         <section class="font-size-18 ">Assign Delivery Boy</section>
                                                                         <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
                                                                             <option value="0">Select Delivery Boy</option>
@@ -401,7 +398,29 @@ $http_host = $this->config->item('http_host');
                         // return console.log(response);
                         let data = JSON.parse(response)
                         if (data.status === 200) {
-                            $(`#order-item-id-${order_item_id}`).remove()
+                            // $(`#order-item-id-${order_item_id}`).remove()
+                            $("#orderSectionReload").load(location.href + " #orderSectionReload");
+                        }
+                    }
+                })
+            }
+        }
+
+        // delete complete order
+        const deleteCompleteOrder = (e) => {
+            let orderId = e.getAttribute("data-orderId")
+            let url = '<?= $base_url ?>'
+            if (confirm("This will delete the entire order, are you sure you want to proceed ?")) {
+                $.ajax({
+                    url: `${url}/home/deleteCompleteOrder`,
+                    type: 'POST',
+                    data: {
+                        orderId: orderId
+                    },
+                    success: function(response) {
+                        // return console.log(response);
+                        let data = JSON.parse(response)
+                        if (data.status === 200) {
                             $("#orderSectionReload").load(location.href + " #orderSectionReload");
                         }
                     }
