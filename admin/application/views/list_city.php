@@ -66,6 +66,7 @@
 
 												<th>State</th>
 												<th>District</th>
+												<th>District ID</th>
 												<th class="text-center">Edit</th>
 											</tr>
 										</thead>
@@ -80,6 +81,7 @@
 
 														<td style="text-align:left"><?php echo $this->city_model->get_state_name($result[$i]->state_id); ?></td>
 														<td style="text-align:left"><?php echo $result[$i]->name; ?></td>
+														<td style="text-align:left"><?php echo $result[$i]->id; ?></td>
 														<td class="text-center"><a class="btn bg-purple2" title="Edit" href="<?php echo $base_url . "city/edit/"; ?><?php echo $result[$i]->id; ?>">
 																<i class="fa fa-pencil"></i></a></td>
 													</tr>
