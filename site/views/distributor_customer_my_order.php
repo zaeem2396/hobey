@@ -156,6 +156,45 @@ $http_host = $this->config->item('http_host');
         height: 0;
 
     }
+
+    /* edit modal style starts */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* edit modal style ends */
 </style>
 
 <!DOCTYPE html>
@@ -336,12 +375,10 @@ $http_host = $this->config->item('http_host');
                                                                                                                                 echo "Selected";
                                                                                                                             } ?>>Delivered</option>
                                                                                     </select>
-                                                                                    <!-- Edit order -->
-                                                                                    <button type="button" class="btn btn-primary btn-lg" style="display: none;" data-toggle="modal" data-target="#flipFlop">
-                                                                                        <i class="fa fa-pencil"></i>
-                                                                                    </button>
-                                                                                    <!-- Delete order -->
                                                                                     <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                                                                    <!-- Edit order -->
+
+                                                                                    <!-- Delete order -->
                                                                                 <?php } ?>
                                                                                 <section class="font-size-18 ">Delivered To</section>
                                                                                 <section class=""><?php echo $order['first_name']; ?> <?php echo $order['last_name']; ?></section>
@@ -374,12 +411,16 @@ $http_host = $this->config->item('http_host');
         </div>
         </div>
         <!-- edit modal -->
+
         <!-- edit modal ends -->
     </section>
 
     <?php include('includes/footer.php'); ?>
 
     <script>
+        // edit modal script start
+
+        // edit modal script ends
         const deleteOrder = (e) => {
             let order_item_id = e.getAttribute("data-orderItemId")
             let order_id = e.getAttribute("data-orderId")
