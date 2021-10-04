@@ -337,7 +337,13 @@ $http_host = $this->config->item('http_host');
                                                                             <div class="col-lg-6 col-md-6 col-sm-9 col-xs-12">
                                                                                 <section class="font-size-18"><?php echo $item['order_item_name']; ?></section>
                                                                                 <section class=""><?php echo $item['material']; ?></section>
-                                                                                <section class="">Quantity - <?php echo $item['product_quantity']; ?></section>
+                                                                                <div class="row">
+                                                                                    <section class="col-md-2">Quantity - <input type="text" value="<?php echo $item['product_quantity']; ?>" class="form-control" id="quantityVal-<?= $item['order_item_id'] ?>" readonly></section>
+                                                                                </div>
+                                                                                <div style="margin-top: 1%;" id="changeButtonContent-<?= $item['order_item_id'] ?>">
+                                                                                    <button onclick="editSingleOrder(this)" data-editOrderId="<?= $item['order_item_id'] ?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></button>
+                                                                                </div>
+                                                                                <button id="displayButton-<?= $item['order_item_id'] ?>" onclick="submitOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-qty="<?= $item['product_quantity'] ?>" data-orderId="<?= $item['order_id'] ?>" data-editOrderId="<?= $item['order_item_id'] ?>" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>
                                                                                 <section class="font-size-18"><i class="fa fa-inr"></i> <?php echo number_format($item['product_item_price']); ?></section>
                                                                             </div>
                                                                             <div class="col-sm-3 visible-sm"></div>
@@ -377,9 +383,6 @@ $http_host = $this->config->item('http_host');
                                                                                                                             } ?>>Delivered</option>
                                                                                     </select>
                                                                                     <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                                                                    <!-- Edit order -->
-
-                                                                                    <!-- Delete order -->
                                                                                 <?php } ?>
                                                                                 <section class="font-size-18 ">Delivered To</section>
                                                                                 <section class=""><?php echo $order['first_name']; ?> <?php echo $order['last_name']; ?></section>
@@ -448,6 +451,51 @@ $http_host = $this->config->item('http_host');
             }
         }
 
+        // edit single order
+        const editSingleOrder = (e) => {
+            let singleOrderId = e.getAttribute("data-editOrderId");
+            // return console.log(document.getElementById(`displayButton-${singleOrderId}`));
+            document.getElementById(`quantityVal-${singleOrderId}`).readOnly = false;
+            // document.getElementById(`displayButton-${singleOrderId}`).style.display = "block";
+            document.getElementById(`changeButtonContent-${singleOrderId}`).innerHTML = `<button data-editOrderId="${singleOrderId}" class="btn btn-sm btn-danger" onclick="cancelEditOrder(this)"><i class="fa fa-times"></i></button>`
+        }
+
+        // cancel single order edit
+        const cancelEditOrder = (e) => {
+            let singleOrderId = e.getAttribute("data-editOrderId");
+            document.getElementById(`quantityVal-${singleOrderId}`).readOnly = true;
+            // return console.log(document.getElementById(`displayButton-${singleOrderId}`));
+            // document.getElementById(`displayButton-${singleOrderId}`).style.display = "none";
+            document.getElementById(`changeButtonContent-${singleOrderId}`).innerHTML = `<button data-editOrderId="${singleOrderId}" class="btn btn-sm btn-primary" onclick="editSingleOrder(this)"><i class="fa fa-pencil"></i></button>`
+        }
+
+        // submit edit order
+        const submitOrder = (e) => {
+            let prodPrice = e.getAttribute("data-price")
+            let prodQty = e.getAttribute("data-qty")
+            let orderItemId = e.getAttribute("data-editOrderId")
+            let orderId = e.getAttribute("data-orderId")
+            let qtyValue = document.getElementById(`quantityVal-${orderItemId}`).value
+            // return console.log(qtyValue);
+            let url = '<?= $base_url ?>'
+            if (confirm("Are you sure you want to change the quantity ?")) {
+                $.ajax({
+                    url: `${url}/home/editOrder`,
+                    type: 'POST',
+                    data: {
+                        qtyValue: qtyValue,
+                        prodPrice: prodPrice,
+                        prodQty: prodQty,
+                        orderItemId: orderItemId,
+                        orderId: orderId
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    }
+                })
+            }
+        }
+
         // delete complete order
         const deleteCompleteOrder = (e) => {
             let orderId = e.getAttribute("data-orderId")
@@ -495,6 +543,7 @@ $http_host = $this->config->item('http_host');
         }
     </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js'></script>
+    <!-- invoice modal starts -->
     <div class="modal fade" id="create_label_modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" id="create_label_html">
@@ -502,7 +551,22 @@ $http_host = $this->config->item('http_host');
             </div>
         </div>
     </div>
+    <!-- invoice modal ends -->
+
+    <!-- edit quantity modal starts -->
+    <div class="modal fade" id="edit_quantity_modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" id="create_label_html">
+                <h1>Modal content</h1>
+            </div>
+        </div>
+    </div>
+    <!-- edit quantity modal ends -->
     <script>
+        const edit_quantity = () => {
+            $('#edit_quantity_modal').modal('show');
+        }
+
         function createinvoice(id) {
             var itemid = id;
             var url = '<?php echo $base_url; ?>account/createinvoice_vendor';

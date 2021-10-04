@@ -758,7 +758,7 @@ class Home extends CI_Controller
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
 		// echo "<pre>";
-		// var_dump($data['orders_list']);
+		// var_dump($data['orders_list'][2]);
 		// exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
@@ -1551,5 +1551,18 @@ class Home extends CI_Controller
 		} else {
 			echo json_encode(["status" => 500]);
 		}
+	}
+
+	function editOrder()
+	{
+		$qtyValue = $this->input->post("qtyValue");
+		$prodPrice = $this->input->post("prodPrice");
+		$prodQty = $this->input->post("prodQty");
+		$orderItemId = $this->input->post("orderItemId");
+		$orderId = $this->input->post("orderId");
+		$newTotalPrice = $prodPrice * $qtyValue;
+		$getOldPrice = $this->db->select("order_total")->from("ci_orders")->get()->result_array();
+		if ($newTotalPrice > $getOldPrice[0]['order_total']) { } else { }
+		$sql1 = $this->db->query("update ci_order_item set product_quantity='$qtyValue' and product_item_price='$newTotalPrice' where order_item_id='$orderItemId'");
 	}
 }
