@@ -319,7 +319,11 @@ $http_host = $this->config->item('http_host');
                                                                                                                         echo $mysqldate = date('l, F d, Y', $order_date); ?></section>
                                                                     </div>
 
-                                                                    <?php foreach ($order['items'] as $item) { ?>
+                                                                    <?php for ($i = 0; $i < count($order['items']); $i++) {
+                                                                                $item = $order['items'][$i];
+                                                                                $qty = $item['product_quantity'];
+                                                                                $singleProdPrice = number_format($item['product_item_price'] / ($qty < 1 ? 1 : $qty));
+                                                                                ?>
                                                                         <div class="col-xs-12 text-xs-center padding-none" id="order-item-id-<?= $item['order_item_id'] ?>">
                                                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 mb-15 text-xs-center padding-none">
                                                                                 <?php
@@ -337,13 +341,13 @@ $http_host = $this->config->item('http_host');
                                                                                 <section class="font-size-18"><?php echo $item['order_item_name']; ?></section>
                                                                                 <section class=""><?php echo $item['material']; ?></section>
                                                                                 <div class="row">
-                                                                                    <section class="col-md-2">Quantity - <input type="text" value="<?php echo $item['product_quantity']; ?>" class="form-control" id="quantityVal-<?= $item['order_item_id'] ?>" readonly></section>
+                                                                                    <section class="col-md-2">Quantity - <input type="text" value="<?php echo $item['product_quantity']; ?>" class="form-control" id="quantityVal-<?= $item['order_id'] ?>-<?= $i ?>" readonly></section>
                                                                                 </div>
-                                                                                <div style="margin-top: 1%;" id="changeButtonContent-<?= $item['order_item_id'] ?>">
-                                                                                    <button onclick="editSingleOrder(this)" data-editOrderId="<?= $item['order_item_id'] ?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></button>
+                                                                                <!-- <div style="margin-top: 1%;" id="changeButtonContent-<?= $item['order_id'] ?>-<?= $i ?>">
+                                                                                    <button onclick="editSingleOrder(this)" data-i="<?= $i ?>" data-editOrderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></button>
                                                                                 </div>
-                                                                                <button id="displayButton-<?= $item['order_item_id'] ?>" onclick="submitOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-qty="<?= $item['product_quantity'] ?>" data-orderId="<?= $item['order_id'] ?>" data-editOrderId="<?= $item['order_item_id'] ?>" class="btn btn-sm btn-success"><i class="fa fa-check"></i></button>
-                                                                                <section class="font-size-18"><i class="fa fa-inr"></i> <?php echo number_format($item['product_item_price']); ?></section>
+                                                                                <button id="displayButton-<?= $item['order_item_id'] ?>" onclick="submitOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-qty="<?= $item['product_quantity'] ?>" data-orderId="<?= $item['order_id'] ?>" data-editOrderId="<?= $item['order_item_id'] ?>" class="btn btn-sm btn-success allOrderList-<?= $item['order_id'] ?>"><i class="fa fa-check"></i></button> -->
+                                                                                <section class="font-size-18"><i class="fa fa-inr"></i> <?= $singleProdPrice ?> x <?= $item['product_quantity'] ?> = <i class="fa fa-inr"></i> <?php echo number_format($item['product_item_price']); ?></section>
                                                                             </div>
                                                                             <div class="col-sm-3 visible-sm"></div>
                                                                             <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12 " style="display: block;">
@@ -453,10 +457,11 @@ $http_host = $this->config->item('http_host');
         // edit single order
         const editSingleOrder = (e) => {
             let singleOrderId = e.getAttribute("data-editOrderId");
+            let i = e.getAttribute('data-i')
             // return console.log(document.getElementById(`displayButton-${singleOrderId}`));
-            document.getElementById(`quantityVal-${singleOrderId}`).readOnly = false;
+            document.getElementById(`quantityVal-${singleOrderId}-${i}`).readOnly = false;
             // document.getElementById(`displayButton-${singleOrderId}`).style.display = "block";
-            document.getElementById(`changeButtonContent-${singleOrderId}`).innerHTML = `<button data-editOrderId="${singleOrderId}" class="btn btn-sm btn-danger" onclick="cancelEditOrder(this)"><i class="fa fa-times"></i></button>`
+            document.getElementById(`changeButtonContent-${singleOrderId}-${i}`).innerHTML = `<button data-editOrderId="${singleOrderId}-${i}" class="btn btn-sm btn-danger" onclick="cancelEditOrder(this)"><i class="fa fa-times"></i></button>`
         }
 
         // cancel single order edit
@@ -465,31 +470,45 @@ $http_host = $this->config->item('http_host');
             document.getElementById(`quantityVal-${singleOrderId}`).readOnly = true;
             // return console.log(document.getElementById(`displayButton-${singleOrderId}`));
             // document.getElementById(`displayButton-${singleOrderId}`).style.display = "none";
-            document.getElementById(`changeButtonContent-${singleOrderId}`).innerHTML = `<button data-editOrderId="${singleOrderId}" class="btn btn-sm btn-primary" onclick="editSingleOrder(this)"><i class="fa fa-pencil"></i></button>`
+            document.getElementById(`changeButtonContent-${singleOrderId}-${i}`).innerHTML = `<button data-editOrderId="${singleOrderId}-${i}" class="btn btn-sm btn-primary" onclick="editSingleOrder(this)"><i class="fa fa-pencil"></i></button>`
         }
 
         // submit edit order
         const submitOrder = (e) => {
-            let prodPrice = e.getAttribute("data-price")
-            let prodQty = e.getAttribute("data-qty")
-            let orderItemId = e.getAttribute("data-editOrderId")
             let orderId = e.getAttribute("data-orderId")
-            let qtyValue = document.getElementById(`quantityVal-${orderItemId}`).value
-            // return console.log(qtyValue);
+            let orderList = document.getElementsByClassName(`allOrderList-${orderId}`)
+            let orderItemId = e.getAttribute("data-editOrderId")
             let url = '<?= $base_url ?>'
+
+            let data = []
+            for (let i = 0; i < orderList.length; i++) {
+                const e = orderList[i];
+                const qty = e.getAttribute("data-qty");
+                const q = parseInt(document.getElementById(`quantityVal-${orderId}-${i}`).value);
+                if (!q || q < 1) {
+                    alert('Quantity should be greater than 0');
+                    return;
+                }
+                data.push({
+                    prodPrice: parseFloat(e.getAttribute("data-price")) / parseFloat(qty),
+                    prodQty: qty,
+                    orderItemId: e.getAttribute("data-editOrderId"),
+                    orderId: e.getAttribute("data-orderId"),
+                    qtyValue: q
+                })
+            }
+
             if (confirm("Are you sure you want to change the quantity ?")) {
+                // return console.log(data);
                 $.ajax({
                     url: `${url}/home/editOrder`,
                     type: 'POST',
                     data: {
-                        qtyValue: qtyValue,
-                        prodPrice: prodPrice,
-                        prodQty: prodQty,
-                        orderItemId: orderItemId,
-                        orderId: orderId
+                        data: JSON.stringify(data)
                     },
                     success: function(response) {
-                        console.log(response);
+                        // console.log(response);
+                        $("#orderSectionReload").load(location.href + " #orderSectionReload");
                     }
                 })
             }

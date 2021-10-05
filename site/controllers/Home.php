@@ -1539,14 +1539,23 @@ class Home extends CI_Controller
 
 	function editOrder()
 	{
-		$qtyValue = $this->input->post("qtyValue");
-		$prodPrice = $this->input->post("prodPrice");
-		$prodQty = $this->input->post("prodQty");
-		$orderItemId = $this->input->post("orderItemId");
-		$orderId = $this->input->post("orderId");
-		$newTotalPrice = $prodPrice * $qtyValue;
-		$getOldPrice = $this->db->select("order_total")->from("ci_orders")->get()->result_array();
-		if ($newTotalPrice > $getOldPrice[0]['order_total']) { } else { }
-		$sql1 = $this->db->query("update ci_order_item set product_quantity='$qtyValue' and product_item_price='$newTotalPrice' where order_item_id='$orderItemId'");
+		$data = json_decode($_POST['data']);
+		$id = '';
+		$totalPrice = 0;
+		foreach ($data as $d) :
+			$qtyValue = $d->qtyValue;
+			$prodPrice = $d->prodPrice;
+			$prodQty = $d->prodQty;
+			$orderItemId = $d->orderItemId;
+			$orderId = $d->orderId;
+			$id = $orderId;
+			$newTotalPrice = $prodPrice * $qtyValue;
+			$totalPrice += $newTotalPrice;
+			$this->db->query("UPDATE ci_order_item SET product_quantity='$qtyValue', product_item_price='$newTotalPrice' WHERE order_item_id='$orderItemId'");
+		// var_dump($this->db->last_query());
+		// exit;
+		endforeach;
+		$this->db->query("update ci_orders set order_total='$totalPrice' where order_id='$id'");
+		echo json_encode(["status" => 200]);
 	}
 }
