@@ -50,26 +50,27 @@ function AmountInWords(float $amount)
         /* margin: 30px auto; */
     }
 
-    .modal-header {
-        line-height: 20px;
-    }
-
     table,
     th,
     td {
+
         border: 1px solid black;
+
         border-collapse: collapse;
+
         text-align: center;
+
     }
 
     th,
     td {
-        padding: 2px;
+
+        padding: 10px;
+
     }
 
     th {
         background: #cccccc87;
-        line-height: 12px;
     }
 </style>
 <div class="modal-header">
@@ -90,7 +91,7 @@ function AmountInWords(float $amount)
                     <div class="row">
                         <?php //echo "<pre>";print_r($orderdetails);echo "</pre>" ;
                         ?>
-                        <div style="padding:2px;margin:10px 20px;display: flow-root;">
+                        <div style="padding:20px;margin:10px 20px;display: flow-root;">
                             <div style="width:20%;float:left;">
                                 <img src="<?php echo $base_url_views; ?>customer/images/logo-new.png" style="">
                             </div>
@@ -171,6 +172,7 @@ function AmountInWords(float $amount)
                                     <th style="width:30%;">Description</th>
                                     <th style="width:10%;">MRP</th>
                                     <th>Special Unit Price</th>
+                                    <th>Rate of GST</th>
                                     <th>QTY</th>
                                     <th>Total</th>
                                     <th>Total Saving</th>
@@ -189,24 +191,18 @@ function AmountInWords(float $amount)
                                         } else {
                                             $displaygstamt =  round($gstamt);
                                         }
-
-                                        if ($j < 30) {
-                                            ?>
-                                            <tr>
-                                                <td><?php echo $j; ?>.</td>
-                                                <td><?php echo $order->order_item_name; ?></td>
-                                                <td>Rs. <?php echo round($order->realprice); ?></td>
-                                                <td>Rs. <?php echo round($order->product_item_price); ?></td>
-                                                <td><?php echo $order->product_quantity; ?></td>
-                                                <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td>
-                                                <td>Rs. <?php echo round(($order->realprice - $order->product_item_price) * $order->product_quantity); ?></td>
-                                            </tr>
-
-                                <?php }
-                                        $j++;
-
-                                        // if($j>10){break;}
-
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $j; ?>.</td>
+                                            <td><?php echo $order->order_item_name; ?></td>
+                                            <td>Rs. <?php echo round($order->realprice); ?></td>
+                                            <td>Rs. <?php echo round($order->product_item_price); ?></td>
+                                            <td>5%</td>
+                                            <td><?php echo $order->product_quantity; ?></td>
+                                            <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td>
+                                            <td>Rs. <?php echo round(($order->realprice - $order->product_item_price) * $order->product_quantity); ?></td>
+                                        </tr>
+                                <?php $j++;
                                         $qty = $qty + $order->product_quantity;
                                         $price = $price + ($order->product_item_price * $order->product_quantity);
                                         $shippingcost = $shippingcost + $order->productshipping;
@@ -292,7 +288,7 @@ function AmountInWords(float $amount)
     </script>
 
     <script type="text/javascript">
-        function Expor111t() {
+        function Export() {
             // html2canvas(document.getElementById('tblCustomers'), {
             //     onrendered: function(canvas) {
             //         var data = canvas.toDataURL();
@@ -305,29 +301,22 @@ function AmountInWords(float $amount)
             //         pdfMake.createPdf(docDefinition).download("invoice.pdf");
             //     }
             // });
-            html2canvas($("#tblCustomers"), {
-                onrendered: function(canvas) {
-                    var imgData = canvas.toDataURL(
-                        'image/png');
-                    var doc = new jsPDF('p', 'mm');
-                    doc.addImage(imgData, 'PNG', 10, 10);
-                    doc.save('invoice.pdf');
-                }
-            });
 
-            /*html2canvas($("#tblCustomers")[0],{allowTaint:true}).then(function(canvas) {
-			var data = canvas.toDataURL();
-			var docDefinition = {
+            html2canvas($("#tblCustomers")[0], {
+                allowTaint: true
+            }).then(function(canvas) {
+                var data = canvas.toDataURL();
+                var docDefinition = {
                     content: [{
                         image: data,
                     }],
                     pageSize: [{
                         width: 500,
                         height: 'auto'
-                      }],
+                    }],
                 };
                 pdfMake.createPdf(docDefinition).download("invoice.pdf");
-        });*/
+            });
 
         }
     </script>

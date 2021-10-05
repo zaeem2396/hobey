@@ -63,11 +63,16 @@
                                                         <td><?php echo $value->weight; ?></td>
                                                         <td>Rs. <span id="trpice_<?php echo $value->id; ?>"><?php echo $value->mrp; ?></span></td>
                                                         <td>Rs. <span id="trpice_<?php echo $value->id; ?>"><?php echo $value->price; ?></span></td>
-                                                        <td><input style="width:50px;" name="productqty[]" oninput="this.value = Math.abs(this.value)" value="0" id="quantityb_<?php echo $value->id; ?>" min="1">
+                                                        <!-- <td><input style="width:50px;" name="productqty[]" oninput="this.value = Math.abs(this.value)" value="0" id="quantityb_<?php echo $value->id; ?>" min="1">
                                                             <input name="productid[]" value="<?php echo $value->id; ?>" type="hidden" />
+                                                        </td> -->
+                                                        <td>
+                                                            <select class="form-control" name="" id="">
+                                                                <?php for ($i = 1; $i <= 20; $i++) :
+                                                                        echo '<option value="' . $i . '">' . $i . "</option>";
+                                                                    endfor; ?>
+                                                            </select>
                                                         </td>
-
-                                                        <!-- td><button onclick="add_to_cart(<?php echo $value->id; ?>);" class="add-to-cart btn btn-default" type="button"><span class="fa fa-shopping-cart" style="padding-right: 10px;"></span> <span class="adtoc">add to cart</span></button></td -->
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </table>
