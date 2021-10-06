@@ -46,7 +46,7 @@
                                     <div class="col-md-7">
                                         <div class="container">
                                             <h3><?= $all_collections[0]->name; ?></h3>
-                                            <table class="table table-striped">
+                                            <table class="table table-striped" id="example">
                                                 <tr class="font-weight-bold">
                                                     <th>Item</th>
                                                     <th>Package size</th>

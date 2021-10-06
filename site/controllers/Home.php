@@ -758,7 +758,7 @@ class Home extends CI_Controller
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
 		// echo "<pre>";
-		// var_dump($data['orders_list'][2]);
+		// var_dump($data['orders_list']);
 		// exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
