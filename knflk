@@ -1,0 +1,155 @@
+[33mcommit ed0cc1fa080d3acbd4218f6c85614f52bd471f27[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Wed Sep 29 17:19:59 2021 +0530
+
+    added delete option in vendor panel
+
+[33mcommit 0a992a0fa4b5dd1993b57b0b033d117c0009d7b2[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Tue Sep 28 17:51:28 2021 +0530
+
+    search on special customer page pending
+
+[33mcommit 5732ec6b58086300bb33f0637b82ea3dfb1aa123[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Tue Sep 28 11:25:18 2021 +0530
+
+    new excel library added
+
+[33mcommit ec952d646338110efdd98b0aafb63c65ca0a8fbe[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Mon Sep 27 12:47:45 2021 +0530
+
+    form validation done
+
+[33mcommit 0d0f3c6e965700f13d75553ccadb692a12163476[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Mon Sep 27 12:02:55 2021 +0530
+
+    admin collection csv upload done
+
+[33mcommit 82d11175069435305d88ef2127ba000083940a21[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Fri Sep 24 12:18:56 2021 +0530
+
+    created a test controller
+
+[33mcommit 4e1638cb0d85a59c8300968a849e873d9605cf5d[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 23 18:28:28 2021 +0530
+
+    fixed collection when no ids
+
+[33mcommit ccd5c7087ecc74f4dc53dd9017ba3965a67457ac[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 23 17:07:46 2021 +0530
+
+    if else error solved
+
+[33mcommit 637842048cad6514ab5c02a6a3553971f6119e56[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 23 17:05:41 2021 +0530
+
+    added env.php file
+
+[33mcommit c77c0c71b30f24469d91c550a8a99ec2d6f53fd9[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 23 17:04:33 2021 +0530
+
+    DB config
+
+[33mcommit f790f6c63cb527c3be2c7f84ff1763bd57135ff6[m
+Author: zaeem2396 <zaeemansari87@gmail.com>
+Date:   Thu Sep 23 11:32:17 2021 +0000
+
+    permissions
+
+[33mcommit 185dd18a29c204473745d30f663235f3d4a15deb[m[33m ([m[1;31morigin/backup[m[33m)[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 23 15:57:25 2021 +0530
+
+    added env file for test and prod
+
+[33mcommit 6d1254bea077499e7a7a6431ad5c6df45a084f35[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 23 12:37:22 2021 +0530
+
+    redirect after success done
+
+[33mcommit 61143d14dfa9090785170b1cb73d73a95e2f17ce[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Wed Sep 22 16:36:38 2021 +0530
+
+    shifted monthly supply module from customer to distributor
+
+[33mcommit ada399fe86ea49f0b64303ff4663933662453d24[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Tue Sep 21 17:15:18 2021 +0530
+
+    collection code formatted
+
+[33mcommit 8db20e9b14496a456cdf5ed3823f0f895965834a[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Tue Sep 21 15:53:40 2021 +0530
+
+    reports generation pages code formatted
+
+[33mcommit dac45c9c59943db789368dbc6b3f6c2267bfab81[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Tue Sep 21 13:05:06 2021 +0530
+
+    added option disabled in vendor special product report page
+
+[33mcommit 3e3ea3127094d3682497e08b799d7a89121c9086[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Tue Sep 21 11:31:24 2021 +0530
+
+    admin controller, models and view code formatted
+
+[33mcommit 535409f1c3b6e66dbb58da492c918e31d6052234[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Mon Sep 20 17:03:59 2021 +0530
+
+    formatted distributor code
+
+[33mcommit 47f248a3b758b5a1af518ea2a5635a409e9d0350[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Mon Sep 20 11:51:28 2021 +0530
+
+    admin code formatted
+
+[33mcommit 48061339589fc991c79a00d9f7793803fe76ad91[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Fri Sep 17 17:18:51 2021 +0530
+
+    admin section formatting
+
+[33mcommit 1f2f6fa4265f7df23811b5c4970c5c8f575539bc[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Fri Sep 17 16:50:36 2021 +0530
+
+    code formatting done, unwanted comments deleted
+
+[33mcommit f93503be4b76f4f812b72f4e890a2a959c3898a0[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Fri Sep 17 13:49:32 2021 +0530
+
+    formatted controller file
+
+[33mcommit 100fdbfc071bcd7069e1e4b2b9c81a37a9dc4843[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 16 17:28:12 2021 +0530
+
+    connection to dev
+
+[33mcommit 4fdef43cc36bb7d21263eb7b5ae0e20ba5e50cf4[m
+Author: zaeem2396 <zaeem.ansari@varvali.in>
+Date:   Thu Sep 16 17:22:27 2021 +0530
+
+    added custom links for testing purpose
+
+[33mcommit 7b9ef39e15c04f3347be53ccfba482a4eb73041f[m
+Author: zaeem2396 <31367343+zaeem2396@users.noreply.github.com>
+Date:   Thu Sep 16 16:53:42 2021 +0530
+
+    Initial commit
