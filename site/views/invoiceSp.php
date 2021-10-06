@@ -48,26 +48,18 @@ function AmountInWords(float $amount)
     width: 80%;
     /* margin: 30px auto; */
 }
-
+.modal-header { line-height:20px; }
 table,
 th,
 td {
-
     border: 1px solid black;
-
     border-collapse: collapse;
-
     text-align: center;
-
 }
-
 th,
 td {
-
-    padding: 10px;
-
+    padding: 2px;
 }
-
 th {
     background: #cccccc87;
 }
@@ -92,7 +84,7 @@ th {
                 <div style="min-width: 600px">
                     <div class="row">
                         <?php //echo "<pre>";print_r($orderdetails);echo "</pre>" ;?>
-                        <div style="padding:20px;margin:10px 20px;display: flow-root;">
+                        <div style="padding:2px;margin:10px 20px;display: flow-root;">
                             <div style="width:20%;float:left;">
                                 <img src="<?php echo $base_url_views;?>customer/images/logo-new.png" style="">
                             </div>
@@ -103,7 +95,7 @@ th {
                             </div>
                         </div>
                         <div class="clear:both;"></div>
-                        <div style="padding:10px 20px;;margin:10px 20px;display: flow-root;">
+                        <div style="padding:2px 20px;;margin:10px 20px;display: flow-root;">
                             <div style="width:50%;float:left;">
                             <p><strong>Sold By :</strong></p>
                                 <p><span><?php echo $vendordetails->name; ?>
@@ -164,7 +156,7 @@ th {
 
                         <div class="clear:both;"></div>
 
-                        <div style="padding:20px;">
+                        <div style="padding:5px;">
 
                             <table style="width:100%;padding-top:0px;border: 1px solid #000;">
                                 <tr>
@@ -190,6 +182,8 @@ th {
 									   } else {
 											$displaygstamt =  round($gstamt);
 									   }
+									   
+									   if($j<30){
 							  ?>
                                 <tr>
                                     <td><?php echo $j; ?>.</td>
@@ -200,7 +194,11 @@ th {
                                     <td>Rs. <?php echo round(($order->product_item_price*$order->product_quantity)-$gstamt); ?></td>
                                     <td>Rs. <?php echo round(($order->realprice-$order->product_item_price)*$order->product_quantity); ?></td>
                                 </tr>
-                                <?php $j++; 
+                                
+                                <?php }  $j++;
+                                
+                               // if($j>10){break;}
+                                
                               $qty = $qty + $order->product_quantity;
                               $price = $price + ($order->product_item_price*$order->product_quantity);   
                               $shippingcost = $shippingcost + $order->productshipping; 
