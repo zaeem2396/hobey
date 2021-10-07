@@ -172,7 +172,7 @@ function AmountInWords(float $amount)
                                     <th style="width:30%;">Description</th>
                                     <th style="width:10%;">MRP</th>
                                     <th>Special Unit Price</th>
-                                    <th>Rate of GST</th>
+                                    <!-- <th>Rate of GST</th> -->
                                     <th>QTY</th>
                                     <th>Total</th>
                                     <th>Total Saving</th>
@@ -197,7 +197,7 @@ function AmountInWords(float $amount)
                                             <td><?php echo $order->order_item_name; ?></td>
                                             <td>Rs. <?php echo round($order->realprice); ?></td>
                                             <td>Rs. <?php echo round($order->product_item_price); ?></td>
-                                            <td>5%</td>
+                                            <!-- <td>5%</td> -->
                                             <td><?php echo $order->product_quantity; ?></td>
                                             <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td>
                                             <td>Rs. <?php echo round(($order->realprice - $order->product_item_price) * $order->product_quantity); ?></td>
