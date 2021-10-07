@@ -46,7 +46,10 @@
                                     <div class="col-md-7">
                                         <div class="container">
                                             <h3><?= $all_collections[0]->name; ?></h3>
-                                            <table class="table table-striped" id="example">
+                                            <hr>
+                                            </hr>
+                                            <input type="text" class="form-control" id="myInput" onkeyup="searchProducts()" placeholder="Search for products..">
+                                            <table class="table table-striped" id="productList">
                                                 <tr class="font-weight-bold">
                                                     <th>Item</th>
                                                     <th>Package size</th>
@@ -67,11 +70,13 @@
                                                             <input name="productid[]" value="<?php echo $value->id; ?>" type="hidden" />
                                                         </td> -->
                                                         <td>
-                                                            <select class="form-control" name="" id="">
-                                                                <?php for ($i = 1; $i <= 20; $i++) :
-                                                                        echo '<option value="' . $i . '">' . $i . "</option>";
-                                                                    endfor; ?>
+                                                            <select class="form-control" name="productqty[]" oninput="this.value = Math.abs(this.value)" id="quantityb_<?= $value->id; ?>" value="0" min="1">
+                                                                <option value="0" selected disabled>0</option>
+                                                                <?php for ($i = 1; $i <= 20; $i++) : ?>
+                                                                    <option value="<?= $i ?>"><?= $i ?></option>
+                                                                <?php endfor; ?>
                                                             </select>
+                                                            <input name="productid[]" value="<?= $value->id; ?>" type="hidden" />
                                                         </td>
                                                     </tr>
                                                 <?php endforeach; ?>
@@ -111,6 +116,12 @@
                                                         <label for="inputEmail3" class="col-sm-5 col-form-label font-weight-bold">Address</label>
                                                         <div class="col-sm-7">
                                                             <textarea name="address" id="address" cols="30" rows="5" class="form-control" placeholder="Enter customer address" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputEmail3" class="col-sm-5 col-form-label font-weight-bold">Expected delivery date</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="date" name="exp_delivery_date" id="exp_delivery_date" class="form-control" required>
                                                         </div>
                                                     </div>
                                                     <div class="container">
