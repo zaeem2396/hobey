@@ -11,6 +11,7 @@ $findex_url         = $this->config->item('findex_url');
 $base_url_views = $this->config->item('base_url_views');
 
 $http_host = $this->config->item('http_host');
+// complete address = <?= $order['address1']; $order['address2']; $order['city']; $order['state']; $order['post_code'];
 
 ?>
 
@@ -225,6 +226,8 @@ $http_host = $this->config->item('http_host');
 
 
 
+
+
     <style>
         .collapse:not(.show) {
 
@@ -272,143 +275,109 @@ $http_host = $this->config->item('http_host');
                 <div class="col-md-12">
                     <?php include('includes/sidebar_distributor.php'); ?>
                     <div class="content-wrapper">
-                        <div class="content">
-
+                        <div class="">
                             <div class="checkout-area mb-65">
                                 <div class="col-md-12">
-                                    <div id="verticalTab">
-                                        <?php
-                                        if (count($orders_list) > 0) {
-                                            foreach ($orders_list as $order) {
-                                                // echo "<pre>";print_r($order);echo "</pre>";
-                                                ?>
-
-                                                <div class="row mb-15" id="orderSectionReload">
-                                                    <div class="col-md-12 clearfix">
-                                                        <div class="accordion-heading font-size-14">
-                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">Order Number #<?php echo $order['order_id'] ?></a>
-                                                        </div>
-                                                        <div id="collapseOne" class="accordion-body collapse">
-                                                            <div class="padding-15">
-                                                                <div class="accordion-toggle">
-                                                                    <div class="col-xs-12">
-                                                                        <?php
-                                                                                if ($order['is_customer'] == 2) { ?>
-                                                                            <!-- button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button -->
-                                                                        <a href="<?php echo $base_url; ?>home/createinvoice_vendor_sp1/<?php echo $order['order_id'] ?>" target="_blank" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</a>
-                                                                        <?php } else { ?>
-                                                                            <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
-                                                                        <?php } ?>
-                                                                        <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-danger">Delete complete order</button>
-
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-md-6 col-md-push-6 text-xs-center text-sm-center text-right mb-15 padding-none">
-                                                                        <section class="font-size-18 ">Assign Delivery Boy</section>
-                                                                        <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
-                                                                            <option value="0">Select Delivery Boy</option>
-                                                                            <?php
-                                                                                    foreach ($allDeliveryBoys as $deliveryBoy) { ?>
-                                                                                <option value="<?php echo $deliveryBoy->id; ?>" <?php if ($order['deliveryBoyId'] == $deliveryBoy->id) {
-                                                                                                                                                echo "Selected";
-                                                                                                                                            } ?>><?php echo $deliveryBoy->name; ?></option>
-                                                                            <?php }  ?>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-md-6 col-md-pull-6 text-xs-center text-sm-center mb-15 padding-none">
-                                                                        <section class="font-size-18">Order Number #<?php echo $order['order_id'] ?></section>
-                                                                        <section class="font-size-13">Placed on <?php $order_date = strtotime($order['cdate']);
-                                                                                                                        echo $mysqldate = date('l, F d, Y', $order_date); ?></section>
-                                                                    </div>
-
-                                                                    <?php for ($i = 0; $i < count($order['items']); $i++) {
-                                                                                $item = $order['items'][$i];
-                                                                                $qty = $item['product_quantity'];
-                                                                                $singleProdPrice = number_format($item['product_item_price'] / ($qty < 1 ? 1 : $qty));
-                                                                                ?>
-                                                                        <div class="col-xs-12 text-xs-center padding-none" id="order-item-id-<?= $item['order_item_id'] ?>">
-                                                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 mb-15 text-xs-center padding-none">
-                                                                                <?php
-                                                                                            $product_detail = $this->vendor_model->get_product($item['product_id']);
-                                                                                            //print_r($product_detail);
-                                                                                            if ($item['base_image'] != '') { ?>
-                                                                                    <img src="<?php echo $http_host; ?>upload/product/<?php echo $item['base_image']; ?>">
-                                                                                <?php } else { ?>
-                                                                                    <!-- <img src="<?php //echo $base_url_views; 
-                                                                                                                    ?>images/noimage.jpg"  > -->
-                                                                                <?php }  ?>
-                                                                                <!-- <img src="http://fiveonlineclient.in/bpcl/html/images/1_270x.jpg" alt=""> -->
-                                                                            </div>
-                                                                            <div class="col-lg-6 col-md-6 col-sm-9 col-xs-12">
-                                                                                <section class="font-size-18"><?php echo $item['order_item_name']; ?></section>
-                                                                                <section class=""><?php echo $item['material']; ?></section>
-                                                                                <div class="row">
-                                                                                    <section class="col-md-2">Quantity - <input type="text" value="<?php echo $item['product_quantity']; ?>" class="form-control" id="quantityVal-<?= $item['order_id'] ?>-<?= $i ?>" readonly></section>
-                                                                                </div>
-                                                                                <!-- <div style="margin-top: 1%;" id="changeButtonContent-<?= $item['order_id'] ?>-<?= $i ?>">
-                                                                                    <button onclick="editSingleOrder(this)" data-i="<?= $i ?>" data-editOrderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-primary"><i class="fa fa-pencil"></i></button>
-                                                                                </div>
-                                                                                <button id="displayButton-<?= $item['order_item_id'] ?>" onclick="submitOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-qty="<?= $item['product_quantity'] ?>" data-orderId="<?= $item['order_id'] ?>" data-editOrderId="<?= $item['order_item_id'] ?>" class="btn btn-sm btn-success allOrderList-<?= $item['order_id'] ?>"><i class="fa fa-check"></i></button> -->
-                                                                                <section class="font-size-18"><i class="fa fa-inr"></i> <?= $singleProdPrice ?> x <?= $item['product_quantity'] ?> = <i class="fa fa-inr"></i> <?php echo number_format($item['product_item_price']); ?></section>
-                                                                            </div>
-                                                                            <div class="col-sm-3 visible-sm"></div>
-                                                                            <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12 " style="display: block;">
-                                                                                <section class="font-size-18 "> <b>Payment Mode : </b>
-                                                                                    <?php
-                                                                                                if ($order['paymentmode'] == '1') {
-                                                                                                    echo "Cash";
-                                                                                                } else if ($order['paymentmode'] == '2') {
-                                                                                                    echo "Online";
-                                                                                                }
-                                                                                                ?>
-                                                                                </section>
-                                                                                <section class="font-size-18 "> <b>Order Status : </b>
-                                                                                    <?php
-                                                                                                if ($item['order_status'] == 'P') {
-                                                                                                    echo "pending";
-                                                                                                } else if ($item['order_status'] == 'S') {
-                                                                                                    echo "Shipped";
-                                                                                                } else if ($item['order_status'] == 'D') {
-                                                                                                    echo "Delivered";
-                                                                                                }
-                                                                                                ?>
-
-                                                                                </section>
-                                                                                <?php if ($item['order_status'] != 'D') { ?>
-                                                                                    <section class="font-size-18 ">order Status</section>
-                                                                                    <select name="status" id="change_status_<?php echo $item['order_id']; ?>" onchange="change_order_status(this.value,<?php echo $item['order_item_id']; ?>,<?php echo $item['order_id']; ?>,'<?php echo $item['order_status']; ?>');">
-                                                                                        <option value="P" <?php if ($item['order_status'] == 'P') {
-                                                                                                                                echo "Selected";
-                                                                                                                            } ?>>Pending</option>
-                                                                                        <option value="S" <?php if ($item['order_status'] == 'S') {
-                                                                                                                                echo "Selected";
-                                                                                                                            } ?>>Shipped</option>
-                                                                                        <option value="D" <?php if ($item['order_status'] == 'D') {
-                                                                                                                                echo "Selected";
-                                                                                                                            } ?>>Delivered</option>
-                                                                                    </select>
-                                                                                    <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                                                                <?php } ?>
-                                                                                <section class="font-size-18 ">Delivered To</section>
-                                                                                <section class=""><?php echo $order['first_name']; ?> <?php echo $order['last_name']; ?></section>
-                                                                                <section> <?php echo $order['address1']; ?> , <?php echo $order['address2']; ?> , <?php echo $order['city']; ?> , <?php echo $order['state']; ?> , <?php echo $order['post_code']; ?> </section>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    <?php } ?>
-
-                                                                    <div id="priceReloadSection">
-                                                                        <div class="col-xs-12 padding-10 text-center bg-red font-size-20 mb-30"> <i class="fa fa-minus" aria-hidden="true"></i> Total <i class="fa fa-inr"></i> <?php echo number_format($order['order_total']); ?> <i class="fa fa-minus" aria-hidden="true"></i> </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    <?php foreach ($orders_list as $order) : ?>
+                                        <div id="orderSectionReload">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4 class="float-right">Order ID: <b><?= $order['order_id'] ?></b>, Delivered to: <?= $order['first_name']; ?> <?= $order['last_name']; ?>, Address: <?= $order['address1']; ?>,<?= $order['post_code']; ?></h4>
                                                 </div>
-                                        <?php }
-                                        } else {
-                                            echo "Order Not found";
-                                        } ?>
-                                    </div>
+                                                <div class="col-md-4">
+                                                    <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xs btn-danger">Delete complete order</button>
+                                                </div>
+                                            </div>
+                                            <table class="table">
+                                                <tr>
+                                                    <th class="text-center">Delete order</th>
+                                                    <th class="text-center">Items</th>
+                                                    <th class="text-center">Quantity</th>
+                                                    <th class="text-center">Price</th>
+                                                    <th class="text-center">Payment method</th>
+                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Assign delivery boy</th>
+                                                    <th class="text-center">Total</th>
+                                                    <th class="text-center">Expected delivery date</th>
+                                                    <th class="text-center">Invoice</th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <?php foreach ($order['items'] as $item) : ?>
+                                                            <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete this Order"><i class="fa fa-trash"></i></button> <br>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php for ($i = 0; $i < count($order['items']); $i++) {
+                                                                $item = $order['items'][$i];
+                                                                $qty = $item['product_quantity'];
+                                                                $singleProdPrice = number_format($item['product_item_price'] / ($qty < 1 ? 1 : $qty)); ?>
+                                                            <p><?= $item['order_item_name']; ?></p>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php foreach ($order['items'] as $qty) : ?>
+                                                            <?= $qty['product_quantity'] ?> <br>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php foreach ($order['items'] as $price) : ?>
+                                                            <i class="fa fa-inr"></i><?= number_format($price['product_item_price']); ?> <br>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                            if ($order['paymentmode'] == '1') {
+                                                                echo "Cash";
+                                                            } else if ($order['paymentmode'] == '2') {
+                                                                echo "Online";
+                                                            }
+                                                            ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php foreach ($order['items'] as $orderStatus) : ?>
+                                                            <select name="status" id="change_status_<?php echo $orderStatus['order_id']; ?>" onchange="change_order_status(this.value,<?php echo $orderStatus['order_item_id']; ?>,<?php echo $orderStatus['order_id']; ?>,'<?php echo $orderStatus['order_status']; ?>');">
+                                                                <option value="P" <?php if ($orderStatus['order_status'] == 'P') {
+                                                                                                echo "Selected";
+                                                                                            } ?>>Pending</option>
+                                                                <option value="D" <?php if ($orderStatus['order_status'] == 'D') {
+                                                                                                echo "Selected";
+                                                                                            } ?>>Delivered</option>
+                                                            </select>
+                                                            <br>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php foreach ($order['items'] as $dBoy) : ?>
+                                                            <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $dBoy['order_id']; ?>);">
+                                                                <option value="0">Select Delivery Boy</option>
+                                                                <?php
+                                                                        foreach ($allDeliveryBoys as $deliveryBoy) { ?>
+                                                                    <option value="<?php echo $deliveryBoy->id; ?>" <?php if ($order['deliveryBoyId'] == $deliveryBoy->id) {
+                                                                                                                                    echo "Selected";
+                                                                                                                                } ?>><?php echo $deliveryBoy->name; ?></option>
+                                                                <?php }  ?>
+                                                            </select> <br>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?= number_format($order['order_total']); ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?= ($order['exp_delivery_date'] != "") ? date("d-m-Y", strtotime($order['exp_delivery_date'])) : ""; ?>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <?php
+                                                            if ($order['is_customer'] == 2) { ?>
+                                                            <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
+                                                        <?php } else { ?>
+                                                            <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
@@ -538,6 +507,7 @@ $http_host = $this->config->item('http_host');
         }
 
         function change_order_status(status, order_item_id, orderid, oldVlaue) {
+            // return console.log("in order status");
             var box = document.getElementById('change_status_' + orderid);
             var conf = confirm("Are you sure want to change Status ?");
             if (conf == true) {
