@@ -288,26 +288,21 @@ $http_host = $this->config->item('http_host');
                                                     <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xs btn-danger">Delete complete order</button>
                                                 </div>
                                             </div>
-                                            <table class="table" id="orderList">
-                                                <tr>
-                                                    <th class="text-center">Delete order</th>
-                                                    <th class="text-center">Items</th>
-                                                    <th class="text-center">Quantity</th>
-                                                    <th class="text-center">Price</th>
-                                                    <th class="text-center">Payment method</th>
-                                                    <th class="text-center">Status</th>
-                                                    <th class="text-center">Assign delivery boy</th>
-                                                    <th class="text-center">Total</th>
-                                                    <th class="text-center">Expected delivery date</th>
-                                                    <th class="text-center">Invoice</th>
+                                            <table class="table table-bordered" id="orderList">
+                                                <tr style="background-color: #c5c5c5;">
+                                                    <th>Items</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Payment method</th>
+                                                    <th>Status</th>
+                                                    <th>Assign delivery boy</th>
+                                                    <th>Total</th>
+                                                    <th>Expected delivery date</th>
+                                                    <th>Delete Item</th>
+                                                    <th>Invoice</th>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center">
-                                                        <?php foreach ($order['items'] as $item) : ?>
-                                                            <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete this Order"><i class="fa fa-trash"></i></button> <br>
-                                                        <?php endforeach; ?>
-                                                    </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <?php for ($i = 0; $i < count($order['items']); $i++) {
                                                                 $item = $order['items'][$i];
                                                                 $qty = $item['product_quantity'];
@@ -315,17 +310,17 @@ $http_host = $this->config->item('http_host');
                                                             <p><?= $item['order_item_name']; ?></p>
                                                         <?php } ?>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <?php foreach ($order['items'] as $qty) : ?>
                                                             <?= $qty['product_quantity'] ?> <br>
                                                         <?php endforeach; ?>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <?php foreach ($order['items'] as $price) : ?>
                                                             <i class="fa fa-inr"></i><?= number_format($price['product_item_price']); ?> <br>
                                                         <?php endforeach; ?>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <?php
                                                             if ($order['paymentmode'] == '1') {
                                                                 echo "Cash";
@@ -334,7 +329,7 @@ $http_host = $this->config->item('http_host');
                                                             }
                                                             ?>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <select name="status" id="change_status_<?php echo $order['order_id']; ?>" onchange="change_order_status(this.value,0,<?php echo $order['order_id']; ?>,'<?php echo $order['order_status']; ?>');">
                                                             <option value="P" <?php if ($order['order_status'] == 'P') {
                                                                                         echo "Selected";
@@ -344,7 +339,7 @@ $http_host = $this->config->item('http_host');
                                                                                     } ?>>Delivered</option>
                                                         </select>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
                                                             <option value="" selected disabled>Select Delivery Boy</option>
                                                             <?php
@@ -355,13 +350,18 @@ $http_host = $this->config->item('http_host');
                                                             <?php }  ?>
                                                         </select>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <i class="fa fa-inr"></i><?= number_format($order['order_total']); ?>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
                                                         <?= ($order['exp_delivery_date'] != "") ? date("d-m-Y", strtotime($order['exp_delivery_date'])) : ""; ?>
                                                     </td>
-                                                    <td class="text-center">
+                                                    <td>
+                                                        <?php foreach ($order['items'] as $item) : ?>
+                                                            <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete this Order"><i class="fa fa-trash"></i></button> <br>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td>
                                                         <?php
                                                             if ($order['is_customer'] == 2) { ?>
                                                             <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
