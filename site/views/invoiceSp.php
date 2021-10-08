@@ -155,7 +155,7 @@ function AmountInWords(float $amount)
                             </div>
                             <div style="width:50%;float:right;text-align:right;">
                                 <p><strong>Invoice Number:</strong> <span>
-                                        <?php echo $orderdetails[0]->order_id; ?></span></p>
+                                        <?= $orderdetails[0]->order_id; ?><?= $ccno[0]['cc_code']; ?></span></p>
                                 <p><strong>Invoice Date : </strong> <span>
                                         <?php echo date('d/m/Y', strtotime($orderdetails[0]->cdate)); ?></span></p>
                             </div>

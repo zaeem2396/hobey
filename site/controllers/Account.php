@@ -231,7 +231,7 @@ class Account extends CI_Controller
 		$data["orderdetails"] = $this->account_model->getorderinvoice($orderid);
 		//print_r($data["orderdetails"]);die;
 		$data["vendordetails"] = $this->account_model->vendordetails($data["orderdetails"][0]->distributor_id);
-
+		$data['ccno'] = $this->account_model->getccno($this->session->userdata("userid"));
 		$data["ship_address"] = $this->account_model->ship_address($data["orderdetails"][0]->order_id);
 		$data['profile'] = $this->account_model->getuserdata($data["orderdetails"][0]->user_id);
 		$html = $this->load->view('invoice', $data, true);
@@ -246,7 +246,7 @@ class Account extends CI_Controller
 		$data["orderdetails"] = $this->account_model->getorderinvoice($orderid);
 		//print_r($data["orderdetails"]);die;
 		$data["vendordetails"] = $this->account_model->vendordetails($data["orderdetails"][0]->distributor_id);
-
+		$data['ccno'] = $this->account_model->getccno($this->session->userdata("userid"));
 		$data["ship_address"] = $this->account_model->ship_address($data["orderdetails"][0]->order_id);
 		$data['profile'] = $this->account_model->getuserdata($data["orderdetails"][0]->user_id);
 		$html = $this->load->view('invoiceSp', $data, true);
