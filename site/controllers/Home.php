@@ -748,6 +748,7 @@ class Home extends CI_Controller
 
 	function distributor_customer_my_order()
 	{
+		$this->load->model('account_model');
 		$data['err_msg'] = '';
 		$status = $this->input->get('status');
 		$statuss = '';
@@ -757,8 +758,9 @@ class Home extends CI_Controller
 		//echo $this->session->userdata("userid"); die;
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
+		// $data['ccno'] = $this->account_model->getccno($this->session->userdata("userid"));
 		// echo "<pre>";
-		// var_dump($data['orders_list']);
+		// var_dump($data['ccno']);
 		// exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
@@ -1479,7 +1481,7 @@ class Home extends CI_Controller
 		$data["orderdetails"] = $this->account_model->getorderinvoice($orderid);
 		//print_r($data["orderdetails"]);die;
 		$data["vendordetails"] = $this->account_model->vendordetails($data["orderdetails"][0]->distributor_id);
-
+		$data['ccno'] = $this->account_model->getccno($this->session->userdata("userid"));
 		$data["ship_address"] = $this->account_model->ship_address($data["orderdetails"][0]->order_id);
 		$data['profile'] = $this->account_model->getuserdata($data["orderdetails"][0]->user_id);
 		$html = $this->load->view('invoiceSp', $data, true);
