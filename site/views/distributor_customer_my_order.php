@@ -312,12 +312,12 @@ $http_host = $this->config->item('http_host');
                                                     </td>
                                                     <td>
                                                         <?php foreach ($order['items'] as $qty) : ?>
-                                                            <?= $qty['product_quantity'] ?> <br>
+                                                            <p><?= $qty['product_quantity'] ?></p>
                                                         <?php endforeach; ?>
                                                     </td>
                                                     <td>
                                                         <?php foreach ($order['items'] as $price) : ?>
-                                                            <i class="fa fa-inr"></i><?= number_format($price['product_item_price']); ?> <br>
+                                                            <p><i class="fa fa-inr"></i><?= number_format($price['product_item_price']); ?></p>
                                                         <?php endforeach; ?>
                                                     </td>
                                                     <td>
@@ -358,7 +358,9 @@ $http_host = $this->config->item('http_host');
                                                     </td>
                                                     <td>
                                                         <?php foreach ($order['items'] as $item) : ?>
-                                                            <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="Delete this Order"><i class="fa fa-trash"></i></button> <br>
+                                                            <p>
+                                                                <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="<?= $item['order_item_name']; ?>"><i class="fa fa-trash"></i></button>
+                                                            </p>
                                                         <?php endforeach; ?>
                                                     </td>
                                                     <td>
