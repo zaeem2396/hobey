@@ -131,7 +131,7 @@
                            <div class="col-md-4">
                               <div class="form-group">
 
-                                 <span id="prod1">
+                                 <!-- <span id="prod1">
                                     <label for="product_id">Collection Products </label>
                                     <select id="product_id" name="product_id[]" multiple class="form-control">
 
@@ -143,7 +143,10 @@
                                        }  ?>
                                     </select>
                                     <span id="caterror" class="valierror"></span>
-                                 </span>
+                                 </span> -->
+                                 <label style="width:100%;" for="categoryname">Add Collection Products XLS</label>
+                                 <input id="csvfile" name="csv" type="file" class="form-control" placeholder="Pincode XLS" required />
+                                 <span id="caterror" class="valierror"></span>
                               </div>
                            </div>
 
@@ -205,6 +208,15 @@
          $("#enddateerror").html("The end date can not be less than the start date");
          jQuery('#enddateerror').show().delay(0).fadeIn('show');
          jQuery('#enddateerror').show().delay(2000).fadeOut('show');
+         document.getElementById("content_wrapper").scrollIntoView(true);
+         return false;
+      }
+
+      var csvfile = $("#csvfile").val();
+      if (csvfile == '') {
+         $("#caterror").html("Please add excel sheet");
+         jQuery('#caterror').show().delay(0).fadeIn('show');
+         jQuery('#caterror').show().delay(2000).fadeOut('show');
          document.getElementById("content_wrapper").scrollIntoView(true);
          return false;
       }

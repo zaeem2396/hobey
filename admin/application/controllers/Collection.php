@@ -11,6 +11,7 @@ class Collection extends CI_Controller
 		// error_reporting(E_ALL);
 		// ini_set('display_errors', E_ALL);
 		$this->load->model('collection_model');
+		$this->load->model('collection_product_model');
 	}
 
 	function add()
@@ -42,7 +43,64 @@ class Collection extends CI_Controller
 
 			$this->validation->set_fields($fields);
 
+			//upload excel data
+			$file_path = $_FILES['csv']['tmp_name'];
+			$file_type = $_FILES['csv']['type'];
+			$this->load->library('PHPExcel');
+			if ($file_type == 'text/csv') {
+				$objReader = new PHPExcel_Reader_CSV();
+				$PHPExcel = $objReader->load($file_path);
+			} else {
+				$PHPExcel = PHPExcel_IOFactory::load($file_path);
+			}
+			$objWorksheet = $PHPExcel->getActiveSheet();
+			$highestrow = $objWorksheet->getHighestRow();
+			if ($highestrow != 0) {
+				for ($i = 2; $i <= $highestrow; $i++) {
+					$obj_insData = array(
+						'code.' => addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue())
+					);
+					if ($obj_insData == '' && count($obj_insData) == '0') {
+						// continue;
+					} else {
 
+						$material_name = addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue());
+						$vendorname = addslashes($PHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue());
+						// $weight = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
+						// $quantity = addslashes($PHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue());
+						$mrp = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
+						$price = addslashes($PHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue());
+						$d_buy_price = addslashes($PHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue());
+						$city_id = addslashes($PHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue());
+						$hsn_code = addslashes($PHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue());
+						$gst = addslashes($PHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue());
+
+						$excel_data = array(
+							'material_name'    => $material_name,
+							'is_col_product'    => 1,
+							'vendorname'  => $vendorname,
+							// 'weight'    => $weight,
+							// 'quantity'       => $quantity,
+							'mrp'    => $mrp,
+							'price'   => $price,
+							'd_buy_price'   => $d_buy_price,
+							'city_id'   => $city_id,
+							'hsn_code'   => $hsn_code,
+							'gst'   => $gst
+						);
+
+						if ($excel_data['material_name'] != '') {
+							if ($this->collection_product_model->isExistByMaterialName($excel_data['material_name'])) {
+								$id = $this->collection_product_model->commonGetId("product", "material_name", "id", $excel_data['material_name']);
+								$this->collection_product_model->edit($id, $excel_data);
+							} else {
+								$this->collection_product_model->add($excel_data);
+							}
+						}
+					}
+				}
+			}
+			//upload excel data ends
 			$this->collection_model->add($data);
 			$this->session->set_flashdata('L_strErrorMessage', 'Collection Added Successfully!');
 			redirect($this->config->item('base_url') . 'collection/lists');

@@ -45,8 +45,7 @@
                                     <INPUT TYPE="hidden" NAME="hidPgRefRan" VALUE="<?php echo rand(); ?>">
                                     <INPUT TYPE="hidden" NAME="action" VALUE="add_XLS">
                                     <div class="form-group">
-                                        <label style="width:100%; margin:15px 0 5px;" for="categoryname">Add Collection Products XLS
-                                            <!-- <span style="color:red"> *<span>--></label>
+                                        <label style="width:100%; margin:15px 0 5px;" for="categoryname">Add Collection Products XLS</label>
                                         <input id="csvfile" name="csv" type="file" class="form-control" placeholder="Pincode XLS" required />
                                     </div>
                                     <div class="form-group">
