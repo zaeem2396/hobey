@@ -125,14 +125,16 @@ class Collection_product_model extends CI_Model
 		$L_strErrorMessage = '';
 		$data['material_name'] = $content['material_name'];
 		$data['is_col_product'] = $content['is_col_product'];
-		$data['weight'] = $content['weight'];
+		// $data['weight'] = $content['weight'];
 		$data['price'] = $content['price'];
-		$data['quantity'] = $content['quantity'];
+		// $data['quantity'] = $content['quantity'];
 
 		$data['mrp'] = $content['mrp'];
 		$data['vendorname'] = $content['vendorname'];
 		$data['d_buy_price'] = $content['d_buy_price'];
 		$data['city_id'] = $content['city_id'];
+		$data['hsn_code'] = $content['hsn_code'];
+		$data['gst'] = $content['gst'];
 
 		$data['added_date'] = date("Y-m-d");
 		$this->_data = $data;

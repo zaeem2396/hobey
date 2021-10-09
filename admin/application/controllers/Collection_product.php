@@ -1253,23 +1253,27 @@ Team Happy Soul</p><br>
 
 						$material_name = addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue());
 						$vendorname = addslashes($PHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue());
-						$weight = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
-						$quantity = addslashes($PHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue());
-						$mrp = addslashes($PHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue());
-						$price = addslashes($PHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue());
-						$d_buy_price = addslashes($PHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue());
-						$city_id = addslashes($PHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue());
+						// $weight = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
+						// $quantity = addslashes($PHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue());
+						$mrp = addslashes($PHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue());
+						$price = addslashes($PHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue());
+						$d_buy_price = addslashes($PHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue());
+						$city_id = addslashes($PHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue());
+						$hsn_code = addslashes($PHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue());
+						$gst = addslashes($PHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue());
 
 						$data = array(
 							'material_name'    => $material_name,
 							'is_col_product'    => 1,
 							'vendorname'  => $vendorname,
-							'weight'    => $weight,
-							'quantity'       => $quantity,
+							// 'weight'    => $weight,
+							// 'quantity'       => $quantity,
 							'mrp'    => $mrp,
 							'price'   => $price,
 							'd_buy_price'   => $d_buy_price,
-							'city_id'   => $city_id
+							'city_id'   => $city_id,
+							'hsn_code'   => $hsn_code,
+							'gst'   => $gst
 						);
 
 						if ($data['material_name'] != '') {

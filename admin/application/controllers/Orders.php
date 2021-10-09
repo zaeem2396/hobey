@@ -131,7 +131,13 @@ class Orders extends CI_Controller
         $this->data['allstate'] = $this->orders_model->allstate();
         $this->data['alldistrict'] = $this->orders_model->alldistrict();
         $this->data['orders_list'] = $this->orders_model->getspecialOrdersCustomer($id = '', $status, $startdate, $enddate, $distributor_id, $state_id, $district_id);
+<<<<<<< HEAD
         // zvar_dump($this->data['orders_list']);
+=======
+        // echo "<pre>";
+        // var_dump($this->data['orders_list']);
+        // exit;
+>>>>>>> a49cb9f5aea90095701258e9216b8d73dda2ef81
         $this->load->view('lists_specialcustomer', $this->data);
     }
 

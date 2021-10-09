@@ -592,7 +592,8 @@ class Billship extends CI_Controller
 
 	function savespecialorders()
 	{
-		//echo $this->input->post("pincode");exit;
+		// echo $this->input->post("exp_delivery_date");
+		// exit;
 		$this->load->model('cart_model');
 		$id = "";
 
@@ -744,6 +745,7 @@ class Billship extends CI_Controller
 			'vendor_id'	    	=> implode(',', $vendor_id),
 			'distributor_id'	=> $distributor_id,
 			'is_customer' => 2,
+			'exp_delivery_date' => $this->input->post("exp_delivery_date")
 		);
 
 		$productdetailmail = '';

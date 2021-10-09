@@ -11,6 +11,7 @@ $findex_url         = $this->config->item('findex_url');
 $base_url_views = $this->config->item('base_url_views');
 
 $http_host = $this->config->item('http_host');
+// complete address = <?= $order['address1']; $order['address2']; $order['city']; $order['state']; $order['post_code'];
 
 ?>
 
@@ -156,6 +157,45 @@ $http_host = $this->config->item('http_host');
         height: 0;
 
     }
+
+    /* edit modal style starts */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* edit modal style ends */
 </style>
 
 <!DOCTYPE html>
@@ -183,6 +223,8 @@ $http_host = $this->config->item('http_host');
     <link rel="stylesheet" href="<?php echo $base_url_views; ?>assets/css/login.css">
 
     <link rel="stylesheet" href="<?php echo $base_url_views; ?>assets/css/style.css">
+
+
 
 
 
@@ -233,137 +275,106 @@ $http_host = $this->config->item('http_host');
                 <div class="col-md-12">
                     <?php include('includes/sidebar_distributor.php'); ?>
                     <div class="content-wrapper">
-                        <div class="content">
-
+                        <div class="">
                             <div class="checkout-area mb-65">
                                 <div class="col-md-12">
-                                    <div id="verticalTab">
-                                        <?php
-                                        if (count($orders_list) > 0) {
-                                            foreach ($orders_list as $order) {
-                                                // echo "<pre>";print_r($order);echo "</pre>";
-                                                ?>
-
-                                                <div class="row mb-15" id="orderSectionReload">
-                                                    <div class="col-md-12 clearfix">
-                                                        <div class="accordion-heading font-size-14">
-                                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">Order Number #<?php echo $order['order_id'] ?></a>
-                                                        </div>
-                                                        <div id="collapseOne" class="accordion-body collapse">
-                                                            <div class="padding-15">
-                                                                <div class="accordion-toggle">
-                                                                    <div class="col-xs-12">
-                                                                        <?php
-                                                                                if ($order['is_customer'] == 2) { ?>
-                                                                            <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
-                                                                        <?php } else { ?>
-                                                                            <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
-                                                                        <?php } ?>
-                                                                        <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-danger">Delete complete order</button>
-
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-md-6 col-md-push-6 text-xs-center text-sm-center text-right mb-15 padding-none">
-                                                                        <section class="font-size-18 ">Assign Delivery Boy</section>
-                                                                        <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
-                                                                            <option value="0">Select Delivery Boy</option>
-                                                                            <?php
-                                                                                    foreach ($allDeliveryBoys as $deliveryBoy) { ?>
-                                                                                <option value="<?php echo $deliveryBoy->id; ?>" <?php if ($order['deliveryBoyId'] == $deliveryBoy->id) {
-                                                                                                                                                echo "Selected";
-                                                                                                                                            } ?>><?php echo $deliveryBoy->name; ?></option>
-                                                                            <?php }  ?>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col-xs-12 col-md-6 col-md-pull-6 text-xs-center text-sm-center mb-15 padding-none">
-                                                                        <section class="font-size-18">Order Number #<?php echo $order['order_id'] ?></section>
-                                                                        <section class="font-size-13">Placed on <?php $order_date = strtotime($order['cdate']);
-                                                                                                                        echo $mysqldate = date('l, F d, Y', $order_date); ?></section>
-                                                                    </div>
-
-                                                                    <?php foreach ($order['items'] as $item) { ?>
-                                                                        <div class="col-xs-12 text-xs-center padding-none" id="order-item-id-<?= $item['order_item_id'] ?>">
-                                                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12 mb-15 text-xs-center padding-none">
-                                                                                <?php
-                                                                                            $product_detail = $this->vendor_model->get_product($item['product_id']);
-                                                                                            //print_r($product_detail);
-                                                                                            if ($item['base_image'] != '') { ?>
-                                                                                    <img src="<?php echo $http_host; ?>upload/product/<?php echo $item['base_image']; ?>">
-                                                                                <?php } else { ?>
-                                                                                    <!-- <img src="<?php //echo $base_url_views; 
-                                                                                                                    ?>images/noimage.jpg"  > -->
-                                                                                <?php }  ?>
-                                                                                <!-- <img src="http://fiveonlineclient.in/bpcl/html/images/1_270x.jpg" alt=""> -->
-                                                                            </div>
-                                                                            <div class="col-lg-6 col-md-6 col-sm-9 col-xs-12">
-                                                                                <section class="font-size-18"><?php echo $item['order_item_name']; ?></section>
-                                                                                <section class=""><?php echo $item['material']; ?></section>
-                                                                                <section class="">Quantity - <?php echo $item['product_quantity']; ?></section>
-                                                                                <section class="font-size-18"><i class="fa fa-inr"></i> <?php echo number_format($item['product_item_price']); ?></section>
-                                                                            </div>
-                                                                            <div class="col-sm-3 visible-sm"></div>
-                                                                            <div class="col-lg-4 col-md-4 col-sm-9 col-xs-12 " style="display: block;">
-                                                                                <section class="font-size-18 "> <b>Payment Mode : </b>
-                                                                                    <?php
-                                                                                                if ($order['paymentmode'] == '1') {
-                                                                                                    echo "Cash";
-                                                                                                } else if ($order['paymentmode'] == '2') {
-                                                                                                    echo "Online";
-                                                                                                }
-                                                                                                ?>
-                                                                                </section>
-                                                                                <section class="font-size-18 "> <b>Order Status : </b>
-                                                                                    <?php
-                                                                                                if ($item['order_status'] == 'P') {
-                                                                                                    echo "pending";
-                                                                                                } else if ($item['order_status'] == 'S') {
-                                                                                                    echo "Shipped";
-                                                                                                } else if ($item['order_status'] == 'D') {
-                                                                                                    echo "Delivered";
-                                                                                                }
-                                                                                                ?>
-
-                                                                                </section>
-                                                                                <?php if ($item['order_status'] != 'D') { ?>
-                                                                                    <section class="font-size-18 ">order Status</section>
-                                                                                    <select name="status" id="change_status_<?php echo $item['order_id']; ?>" onchange="change_order_status(this.value,<?php echo $item['order_item_id']; ?>,<?php echo $item['order_id']; ?>,'<?php echo $item['order_status']; ?>');">
-                                                                                        <option value="P" <?php if ($item['order_status'] == 'P') {
-                                                                                                                                echo "Selected";
-                                                                                                                            } ?>>Pending</option>
-                                                                                        <option value="S" <?php if ($item['order_status'] == 'S') {
-                                                                                                                                echo "Selected";
-                                                                                                                            } ?>>Shipped</option>
-                                                                                        <option value="D" <?php if ($item['order_status'] == 'D') {
-                                                                                                                                echo "Selected";
-                                                                                                                            } ?>>Delivered</option>
-                                                                                    </select>
-                                                                                    <!-- Edit order -->
-                                                                                    <button type="button" class="btn btn-primary btn-lg" style="display: none;" data-toggle="modal" data-target="#flipFlop">
-                                                                                        <i class="fa fa-pencil"></i>
-                                                                                    </button>
-                                                                                    <!-- Delete order -->
-                                                                                    <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
-                                                                                <?php } ?>
-                                                                                <section class="font-size-18 ">Delivered To</section>
-                                                                                <section class=""><?php echo $order['first_name']; ?> <?php echo $order['last_name']; ?></section>
-                                                                                <section> <?php echo $order['address1']; ?> , <?php echo $order['address2']; ?> , <?php echo $order['city']; ?> , <?php echo $order['state']; ?> , <?php echo $order['post_code']; ?> </section>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    <?php } ?>
-
-                                                                    <div id="priceReloadSection">
-                                                                        <div class="col-xs-12 padding-10 text-center bg-red font-size-20 mb-30"> <i class="fa fa-minus" aria-hidden="true"></i> Total <i class="fa fa-inr"></i> <?php echo number_format($order['order_total']); ?> <i class="fa fa-minus" aria-hidden="true"></i> </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    <?php foreach ($orders_list as $order) : ?>
+                                        <div id="orderSectionReload">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h4 class="float-right">Order ID: <b><?= $order['order_id'] ?></b>, Delivered to: <?= $order['first_name']; ?> <?= $order['last_name']; ?>, Address: <?= $order['address1']; ?>,<?= $order['post_code']; ?></h4>
                                                 </div>
-                                        <?php }
-                                        } else {
-                                            echo "Order Not found";
-                                        } ?>
-                                    </div>
+                                                <div class="col-md-4">
+                                                    <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xs btn-danger">Delete complete order</button>
+                                                </div>
+                                            </div>
+                                            <table class="table table-bordered" id="orderList">
+                                                <tr style="background-color: #c5c5c5;">
+                                                    <th>Items</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Payment method</th>
+                                                    <th>Status</th>
+                                                    <th>Assign delivery boy</th>
+                                                    <th>Total</th>
+                                                    <th>Expected delivery date</th>
+                                                    <th>Delete Item</th>
+                                                    <th>Invoice</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <?php for ($i = 0; $i < count($order['items']); $i++) {
+                                                                $item = $order['items'][$i];
+                                                                $qty = $item['product_quantity'];
+                                                                $singleProdPrice = number_format($item['product_item_price'] / ($qty < 1 ? 1 : $qty)); ?>
+                                                            <p><?= $item['order_item_name']; ?></p>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php foreach ($order['items'] as $qty) : ?>
+                                                            <p><?= $qty['product_quantity'] ?></p>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php foreach ($order['items'] as $price) : ?>
+                                                            <p><i class="fa fa-inr"></i><?= number_format($price['product_item_price']); ?></p>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                            if ($order['paymentmode'] == '1') {
+                                                                echo "Cash";
+                                                            } else if ($order['paymentmode'] == '2') {
+                                                                echo "Online";
+                                                            }
+                                                            ?>
+                                                    </td>
+                                                    <td>
+                                                        <select name="status" id="change_status_<?php echo $order['order_id']; ?>" onchange="change_order_status(this.value,0,<?php echo $order['order_id']; ?>,'<?php echo $order['order_status']; ?>');">
+                                                            <option value="P" <?php if ($order['order_status'] == 'P') {
+                                                                                        echo "Selected";
+                                                                                    } ?>>Pending</option>
+                                                            <option value="D" <?php if ($order['order_status'] == 'D') {
+                                                                                        echo "Selected";
+                                                                                    } ?>>Delivered</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
+                                                            <option value="" selected disabled>Select Delivery Boy</option>
+                                                            <?php
+                                                                foreach ($allDeliveryBoys as $deliveryBoy) { ?>
+                                                                <option value="<?php echo $deliveryBoy->id; ?>" <?php if ($order['deliveryBoyId'] == $deliveryBoy->id) {
+                                                                                                                            echo "Selected";
+                                                                                                                        } ?>><?php echo $deliveryBoy->name; ?></option>
+                                                            <?php }  ?>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <i class="fa fa-inr"></i><?= number_format($order['order_total']); ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= ($order['exp_delivery_date'] != "") ? date("d-m-Y", strtotime($order['exp_delivery_date'])) : ""; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php foreach ($order['items'] as $item) : ?>
+                                                            <p>
+                                                                <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="<?= $item['order_item_name']; ?>"><i class="fa fa-trash"></i></button>
+                                                            </p>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php
+                                                            if ($order['is_customer'] == 2) { ?>
+                                                            <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
+                                                        <?php } else { ?>
+                                                            <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    <?php endforeach; ?>
                                 </div>
                             </div>
                         </div>
@@ -374,12 +385,16 @@ $http_host = $this->config->item('http_host');
         </div>
         </div>
         <!-- edit modal -->
+
         <!-- edit modal ends -->
     </section>
 
     <?php include('includes/footer.php'); ?>
 
     <script>
+        // edit modal script start
+
+        // edit modal script ends
         const deleteOrder = (e) => {
             let order_item_id = e.getAttribute("data-orderItemId")
             let order_id = e.getAttribute("data-orderId")
@@ -401,6 +416,66 @@ $http_host = $this->config->item('http_host');
                             // $(`#order-item-id-${order_item_id}`).remove()
                             $("#orderSectionReload").load(location.href + " #orderSectionReload");
                         }
+                    }
+                })
+            }
+        }
+
+        // edit single order
+        const editSingleOrder = (e) => {
+            let singleOrderId = e.getAttribute("data-editOrderId");
+            let i = e.getAttribute('data-i')
+            // return console.log(document.getElementById(`displayButton-${singleOrderId}`));
+            document.getElementById(`quantityVal-${singleOrderId}-${i}`).readOnly = false;
+            // document.getElementById(`displayButton-${singleOrderId}`).style.display = "block";
+            document.getElementById(`changeButtonContent-${singleOrderId}-${i}`).innerHTML = `<button data-editOrderId="${singleOrderId}-${i}" class="btn btn-sm btn-danger" onclick="cancelEditOrder(this)"><i class="fa fa-times"></i></button>`
+        }
+
+        // cancel single order edit
+        const cancelEditOrder = (e) => {
+            let singleOrderId = e.getAttribute("data-editOrderId");
+            document.getElementById(`quantityVal-${singleOrderId}`).readOnly = true;
+            // return console.log(document.getElementById(`displayButton-${singleOrderId}`));
+            // document.getElementById(`displayButton-${singleOrderId}`).style.display = "none";
+            document.getElementById(`changeButtonContent-${singleOrderId}-${i}`).innerHTML = `<button data-editOrderId="${singleOrderId}-${i}" class="btn btn-sm btn-primary" onclick="editSingleOrder(this)"><i class="fa fa-pencil"></i></button>`
+        }
+
+        // submit edit order
+        const submitOrder = (e) => {
+            let orderId = e.getAttribute("data-orderId")
+            let orderList = document.getElementsByClassName(`allOrderList-${orderId}`)
+            let orderItemId = e.getAttribute("data-editOrderId")
+            let url = '<?= $base_url ?>'
+
+            let data = []
+            for (let i = 0; i < orderList.length; i++) {
+                const e = orderList[i];
+                const qty = e.getAttribute("data-qty");
+                const q = parseInt(document.getElementById(`quantityVal-${orderId}-${i}`).value);
+                if (!q || q < 1) {
+                    alert('Quantity should be greater than 0');
+                    return;
+                }
+                data.push({
+                    prodPrice: parseFloat(e.getAttribute("data-price")) / parseFloat(qty),
+                    prodQty: qty,
+                    orderItemId: e.getAttribute("data-editOrderId"),
+                    orderId: e.getAttribute("data-orderId"),
+                    qtyValue: q
+                })
+            }
+
+            if (confirm("Are you sure you want to change the quantity ?")) {
+                // return console.log(data);
+                $.ajax({
+                    url: `${url}/home/editOrder`,
+                    type: 'POST',
+                    data: {
+                        data: JSON.stringify(data)
+                    },
+                    success: function(response) {
+                        // console.log(response);
+                        $("#orderSectionReload").load(location.href + " #orderSectionReload");
                     }
                 })
             }
@@ -429,6 +504,7 @@ $http_host = $this->config->item('http_host');
         }
 
         function change_order_status(status, order_item_id, orderid, oldVlaue) {
+            // return console.log("in order status");
             var box = document.getElementById('change_status_' + orderid);
             var conf = confirm("Are you sure want to change Status ?");
             if (conf == true) {
@@ -453,6 +529,7 @@ $http_host = $this->config->item('http_host');
         }
     </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.js'></script>
+    <!-- invoice modal starts -->
     <div class="modal fade" id="create_label_modal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content" id="create_label_html">
@@ -460,7 +537,22 @@ $http_host = $this->config->item('http_host');
             </div>
         </div>
     </div>
+    <!-- invoice modal ends -->
+
+    <!-- edit quantity modal starts -->
+    <div class="modal fade" id="edit_quantity_modal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content" id="create_label_html">
+                <h1>Modal content</h1>
+            </div>
+        </div>
+    </div>
+    <!-- edit quantity modal ends -->
     <script>
+        const edit_quantity = () => {
+            $('#edit_quantity_modal').modal('show');
+        }
+
         function createinvoice(id) {
             var itemid = id;
             var url = '<?php echo $base_url; ?>account/createinvoice_vendor';

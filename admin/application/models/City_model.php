@@ -31,6 +31,8 @@ class City_model extends CI_Model {
 
 		$data['state_id'] = $content['state_id'];
 		$data['name'] = $content['name'];
+		$data['sales_office_name'] = $content['sales_office_name'];
+		$data['sales_office_no'] = $content['sales_office_no'];
 		
 		$this->_data = $data;
 		$this->db->where('id', $id);
@@ -281,4 +283,3 @@ function is_already_exist_edit($user,$id)
 	
 	
 }
-?>

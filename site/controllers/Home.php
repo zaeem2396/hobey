@@ -748,6 +748,7 @@ class Home extends CI_Controller
 
 	function distributor_customer_my_order()
 	{
+		$this->load->model('account_model');
 		$data['err_msg'] = '';
 		$status = $this->input->get('status');
 		$statuss = '';
@@ -757,8 +758,9 @@ class Home extends CI_Controller
 		//echo $this->session->userdata("userid"); die;
 		$data['orders_list'] = $this->home_model->getDistributorOrdersCustomer($id = '', $statuss);
 		$data['allDeliveryBoys'] = $this->home_model->getDistributorDeliveryBoys();
+		// $data['ccno'] = $this->account_model->getccno($this->session->userdata("userid"));
 		// echo "<pre>";
-		// var_dump($data['orders_list']);
+		// var_dump($data['ccno']);
 		// exit;
 		$this->load->view('distributor_customer_my_order', $data);
 	}
@@ -1479,7 +1481,7 @@ class Home extends CI_Controller
 		$data["orderdetails"] = $this->account_model->getorderinvoice($orderid);
 		//print_r($data["orderdetails"]);die;
 		$data["vendordetails"] = $this->account_model->vendordetails($data["orderdetails"][0]->distributor_id);
-
+		$data['ccno'] = $this->account_model->getccno($this->session->userdata("userid"));
 		$data["ship_address"] = $this->account_model->ship_address($data["orderdetails"][0]->order_id);
 		$data['profile'] = $this->account_model->getuserdata($data["orderdetails"][0]->user_id);
 		$html = $this->load->view('invoiceSp', $data, true);
@@ -1488,8 +1490,9 @@ class Home extends CI_Controller
 
 	function distributor_monthly_order()
 	{
-		// var_dump($this->config->item('base_url'));exit;
 		$data['all_collections'] = $this->home_model->all_collections();
+		// var_dump($data['all_collections']);
+		// exit;
 		$data['alldistributors'] = $this->home_model->spdistributors();
 		$data['distributorName'] = $this->home_model->getDistributorName($this->session->userdata('userid'));
 		// echo "<pre>";var_dump($data['distributorName']);exit;
@@ -1535,5 +1538,27 @@ class Home extends CI_Controller
 		} else {
 			echo json_encode(["status" => 500]);
 		}
+	}
+
+	function editOrder()
+	{
+		$data = json_decode($_POST['data']);
+		$id = '';
+		$totalPrice = 0;
+		foreach ($data as $d) :
+			$qtyValue = $d->qtyValue;
+			$prodPrice = $d->prodPrice;
+			$prodQty = $d->prodQty;
+			$orderItemId = $d->orderItemId;
+			$orderId = $d->orderId;
+			$id = $orderId;
+			$newTotalPrice = $prodPrice * $qtyValue;
+			$totalPrice += $newTotalPrice;
+			$this->db->query("UPDATE ci_order_item SET product_quantity='$qtyValue', product_item_price='$newTotalPrice' WHERE order_item_id='$orderItemId'");
+		// var_dump($this->db->last_query());
+		// exit;
+		endforeach;
+		$this->db->query("update ci_orders set order_total='$totalPrice' where order_id='$id'");
+		echo json_encode(["status" => 200]);
 	}
 }
