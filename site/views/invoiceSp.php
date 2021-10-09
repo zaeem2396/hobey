@@ -43,6 +43,12 @@ function AmountInWords(float $amount)
    " . $change_words[$amount_after_decimal % 10]) . ' Paise' : '';
     return ($implode_to_Rupees ? $implode_to_Rupees . 'Rupees ' : '') . $get_paise;
 }
+
+function gst($total, $gst_rate)
+{
+    $res = $gst_rate / (100 + $gst_rate) * $total;
+    return $res;
+}
 ?>
 <style>
     .modal-dialog {
@@ -170,11 +176,14 @@ function AmountInWords(float $amount)
                                 <tr>
                                     <th style="width:5%;">Sr.No.</th>
                                     <th style="width:30%;">Description</th>
+                                    <th style="width:8%;">HSN/SAC Code</th>
                                     <th style="width:10%;">MRP</th>
                                     <th>Special Unit Price</th>
-                                    <!-- <th>Rate of GST</th> -->
                                     <th>QTY</th>
                                     <th>Total</th>
+                                    <th>Rate of GST</th>
+                                    <th>CGST</th>
+                                    <th>SGST</th>
                                     <th>Total Saving</th>
                                 </tr>
                                 <?php
@@ -195,11 +204,22 @@ function AmountInWords(float $amount)
                                         <tr>
                                             <td><?php echo $j; ?>.</td>
                                             <td><?php echo $order->order_item_name; ?></td>
+                                            <td><?php echo $order->hsn_code; ?></td>
                                             <td>Rs. <?php echo round($order->realprice); ?></td>
                                             <td>Rs. <?php echo round($order->product_item_price); ?></td>
-                                            <!-- <td>5%</td> -->
                                             <td><?php echo $order->product_quantity; ?></td>
-                                            <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td>
+                                            <!-- <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td> -->
+                                            <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity)); ?></td>
+                                            <td><?= $order->gst; ?>%</td>
+                                            <td>
+                                                <?php
+                                                        // $total_price = round(($order->product_item_price * $order->product_quantity) - $gstamt);
+                                                        $total_price = round(($order->product_item_price * $order->product_quantity));
+                                                        $res = $order->gst / (100 + $order->gst) * $total_price;
+                                                        echo number_format($res / 2, 2);
+                                                        ?>
+                                            </td>
+                                            <td><?php echo number_format($res / 2, 2); ?></td>
                                             <td>Rs. <?php echo round(($order->realprice - $order->product_item_price) * $order->product_quantity); ?></td>
                                         </tr>
                                 <?php $j++;
@@ -211,9 +231,8 @@ function AmountInWords(float $amount)
                                     }
                                 } ?>
                                 <tr>
-                                    <td colspan="5" style="text-align:right;">Grand Total:</td>
+                                    <td colspan="6" style="text-align:right;">Grand Total:</td>
                                     <td>Rs. <?php echo round(($price + $shippingcost - $coupondiscount)); ?></td>
-                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" style="text-align:right;">Total Savings:</td>

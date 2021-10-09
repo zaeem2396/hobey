@@ -2686,10 +2686,16 @@ class Home_Model extends CI_Model
 
 		$sql = "SELECT p.* FROM tbl_collection p 
 		LEFT JOIN pincode as pincode ON pincode.city_id = p.city_id 
-		where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1 and pincode.name IN (" . $pincode . ")  ";
+		where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1";
+
+		// $sql_bkup = "SELECT p.* FROM tbl_collection p 
+		// LEFT JOIN pincode as pincode ON pincode.city_id = p.city_id 
+		// where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1 and pincode.name IN (" . $pincode . ")  ";
 
 
 		$query = $this->db->query($sql);
+		// var_dump($this->db->last_query());
+		// exit;
 		if ($query->num_rows() > 0) {
 			$result = $query->result();
 			return $result;

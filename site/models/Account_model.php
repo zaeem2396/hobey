@@ -238,7 +238,7 @@ class Account_model extends CI_Model
 
 	function getorderinvoice($uid)
 	{
-		$sql = "SELECT c.*, ci.* from ci_orders as c
+		$sql = "SELECT c.*, ci.*,p.hsn_code,p.gst from ci_orders as c
 				LEFT JOIN ci_order_item as ci ON c.order_id=ci.order_id 
 				INNER JOIN product as p ON p.id = ci.product_id 
 				where c.order_id='" . $uid . "' order by c.order_id desc";

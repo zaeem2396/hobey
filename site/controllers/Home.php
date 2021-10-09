@@ -1506,8 +1506,9 @@ class Home extends CI_Controller
 
 	function distributor_monthly_order()
 	{
-		// var_dump($this->config->item('base_url'));exit;
 		$data['all_collections'] = $this->home_model->all_collections();
+		// var_dump($data['all_collections']);
+		// exit;
 		$data['alldistributors'] = $this->home_model->spdistributors();
 		$data['distributorName'] = $this->home_model->getDistributorName($this->session->userdata('userid'));
 		// echo "<pre>";var_dump($data['distributorName']);exit;
