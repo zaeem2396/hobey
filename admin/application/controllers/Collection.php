@@ -149,8 +149,10 @@ class Collection extends CI_Controller
 			$data['allstate'] = $this->collection_model->alldata("state");
 			$data['allcity'] = $this->collection_model->alldata("city");
 			$data['allPincode'] = $this->collection_model->alldata("pincode");
-			$data["allcproducts"] = $this->collection_model->allcproducts();
-
+			$data["allcproducts"] = $this->collection_model->allcproducts($result[0]->city_id);
+			// echo "<pre>";
+			// var_dump($data["allcproducts"]);
+			// exit;
 			$this->load->view('edit_collection', $data);
 		} else {
 			$this->session->set_flashdata('L_strErrorMessage', 'No Such Attribute !');
