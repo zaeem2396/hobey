@@ -123,11 +123,19 @@ function gst($total, $gst_rate)
                             </div>
                             <div style="width:50%;float:right;text-align:right;">
                                 <p><strong>Billing Address :</strong></p>
-                                <p><span><?php echo $ship_address->bill_first_name; ?>
+                                <p>
+                                    <!-- <span>
+                                        <?php echo $ship_address->bill_first_name; ?>
                                         <?php echo $ship_address->bill_last_name; ?><br />
                                         <?php echo $ship_address->bill_city; ?><br /><?php echo $ship_address->bill_state; ?>,
                                         <?php echo $ship_address->bill_country; ?>,
-                                        <?php echo $ship_address->bill_post_code; ?></span></p>
+                                        <?php echo $ship_address->bill_post_code; ?>
+                                    </span> -->
+                                    <?php echo $ship_address->first_name; ?> <?php echo $ship_address->last_name; ?>
+                                    <br /><?php echo $ship_address->address1; ?>,
+                                    <br /><?php echo $ship_address->city; ?>,<?php echo $ship_address->state; ?>,
+                                    <?php echo $ship_address->post_code; ?>
+                                </p>
                             </div>
 
 
@@ -161,7 +169,7 @@ function gst($total, $gst_rate)
                             </div>
                             <div style="width:50%;float:right;text-align:right;">
                                 <p><strong>Invoice Number:</strong> <span>
-                                        <?= $orderdetails[0]->order_id; ?><?= $ccno[0]['cc_code']; ?></span></p>
+                                        <?= $ccno[0]['cc_code']; ?><?= $orderdetails[0]->order_id; ?></span></p>
                                 <p><strong>Invoice Date : </strong> <span>
                                         <?php echo date('d/m/Y', strtotime($orderdetails[0]->cdate)); ?></span></p>
                             </div>
@@ -202,7 +210,7 @@ function gst($total, $gst_rate)
                                         }
                                         ?>
                                         <tr>
-                                            <td><?php echo $j; ?>.</td>
+                                            <td><?php echo $j; ?></td>
                                             <td><?php echo $order->order_item_name; ?></td>
                                             <td><?php echo $order->hsn_code; ?></td>
                                             <td>Rs. <?php echo round($order->realprice); ?></td>
@@ -245,11 +253,11 @@ function gst($total, $gst_rate)
                                 <tr>
                                     <td colspan="7" style="text-align:right;font-size:18px;">For <strong><?php echo $vendordetails->name; ?>:</strong></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td colspan="7" style="text-align:right;font-size:18px;border-top:0">
                                         <br /><br />Authorized Signatory
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
 
 

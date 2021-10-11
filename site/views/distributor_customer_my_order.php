@@ -281,27 +281,43 @@ $http_host = $this->config->item('http_host');
                                     <?php foreach ($orders_list as $order) : ?>
                                         <div id="orderSectionReload">
                                             <div class="row">
-                                                <div class="col-md-8">
-                                                    <h4 class="float-right">Order ID: <b><?= $order['order_id'] ?></b>, Delivered to: <?= $order['first_name']; ?> <?= $order['last_name']; ?>, Address: <?= $order['address1']; ?>,<?= $order['post_code']; ?></h4>
+                                                <div class="col-md-10">
+                                                    <h5 class="float-right">
+                                                        Order ID: <b><?= $order['order_id'] ?></b>, Name: <span class="text-capitalize"><?= $order['first_name']; ?> <?= $order['last_name']; ?></span>, Address: <?= $order['address1']; ?>,<?= $order['post_code']; ?>, Expected Delivery Date: <?= ($order['exp_delivery_date'] != "") ? date("d-m-Y", strtotime($order['exp_delivery_date'])) : ""; ?></h5>
+                                                    <h5> Payment: <?= ($order['paymentmode'] == '1') ? "Cash" : "Online"; ?> , Status: <select name="status" id="change_status_<?php echo $order['order_id']; ?>" onchange="change_order_status(this.value,0,<?php echo $order['order_id']; ?>,'<?php echo $order['order_status']; ?>');">
+                                                            <option value="P" <?php if ($order['order_status'] == 'P') {
+                                                                                        echo "Selected";
+                                                                                    } ?>>Pending</option>
+                                                            <option value="D" <?php if ($order['order_status'] == 'D') {
+                                                                                        echo "Selected";
+                                                                                    } ?>>Delivered</option>
+                                                        </select> , Assign deliveryboy: <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
+                                                            <option value="" selected disabled>Select Delivery Boy</option>
+                                                            <?php
+                                                                foreach ($allDeliveryBoys as $deliveryBoy) { ?>
+                                                                <option value="<?php echo $deliveryBoy->id; ?>" <?php if ($order['deliveryBoyId'] == $deliveryBoy->id) {
+                                                                                                                            echo "Selected";
+                                                                                                                        } ?>><?php echo $deliveryBoy->name; ?></option>
+                                                            <?php }  ?>
+                                                        </select>
+                                                    </h5>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xs btn-danger">Delete complete order</button>
+                                                <div class="col-md-2">
+                                                    <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xl btn-danger">Delete Entire Order <i class="fa fa-trash"></i></button>
                                                 </div>
                                             </div>
                                             <table class="table table-bordered" id="orderList">
                                                 <tr style="background-color: #c5c5c5;">
+                                                    <!-- <th>#</th> -->
                                                     <th>Items</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
-                                                    <th>Payment method</th>
-                                                    <th>Status</th>
-                                                    <th>Assign delivery boy</th>
-                                                    <th>Total</th>
-                                                    <th>Expected delivery date</th>
-                                                    <th>Delete Item</th>
+                                                    <th style="width: 7%;">Quantity</th>
+                                                    <th style="width: 7%;">Price</th>
+                                                    <th style="width: 6%;">Total</th>
+                                                    <th style="width: 8%;">Delete Item</th>
                                                     <th>Invoice</th>
                                                 </tr>
                                                 <tr>
+                                                    <!-- <td><?= $i++; ?></td> -->
                                                     <td>
                                                         <?php for ($i = 0; $i < count($order['items']); $i++) {
                                                                 $item = $order['items'][$i];
@@ -321,40 +337,7 @@ $http_host = $this->config->item('http_host');
                                                         <?php endforeach; ?>
                                                     </td>
                                                     <td>
-                                                        <?php
-                                                            if ($order['paymentmode'] == '1') {
-                                                                echo "Cash";
-                                                            } else if ($order['paymentmode'] == '2') {
-                                                                echo "Online";
-                                                            }
-                                                            ?>
-                                                    </td>
-                                                    <td>
-                                                        <select name="status" id="change_status_<?php echo $order['order_id']; ?>" onchange="change_order_status(this.value,0,<?php echo $order['order_id']; ?>,'<?php echo $order['order_status']; ?>');">
-                                                            <option value="P" <?php if ($order['order_status'] == 'P') {
-                                                                                        echo "Selected";
-                                                                                    } ?>>Pending</option>
-                                                            <option value="D" <?php if ($order['order_status'] == 'D') {
-                                                                                        echo "Selected";
-                                                                                    } ?>>Delivered</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <select name="deliveryBoyId" id="assignDeliveryBoy" onchange="assign_delivery_boy(this.value,<?php echo $order['order_id']; ?>);">
-                                                            <option value="" selected disabled>Select Delivery Boy</option>
-                                                            <?php
-                                                                foreach ($allDeliveryBoys as $deliveryBoy) { ?>
-                                                                <option value="<?php echo $deliveryBoy->id; ?>" <?php if ($order['deliveryBoyId'] == $deliveryBoy->id) {
-                                                                                                                            echo "Selected";
-                                                                                                                        } ?>><?php echo $deliveryBoy->name; ?></option>
-                                                            <?php }  ?>
-                                                        </select>
-                                                    </td>
-                                                    <td>
                                                         <i class="fa fa-inr"></i><?= number_format($order['order_total']); ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= ($order['exp_delivery_date'] != "") ? date("d-m-Y", strtotime($order['exp_delivery_date'])) : ""; ?>
                                                     </td>
                                                     <td>
                                                         <?php foreach ($order['items'] as $item) : ?>
@@ -363,12 +346,12 @@ $http_host = $this->config->item('http_host');
                                                             </p>
                                                         <?php endforeach; ?>
                                                     </td>
-                                                    <td>
+                                                    <td style="width: 5%;">
                                                         <?php
                                                             if ($order['is_customer'] == 2) { ?>
-                                                            <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
+                                                            <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;"><i class="fa fa-file-pdf-o" style="font-size: large;" aria-hidden="true"></i></button>
                                                         <?php } else { ?>
-                                                            <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;">Invoice</button>
+                                                            <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-lg btn-default-red" style="float:right;padding: 6px 20px;font-size: large;">Invoice</button>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
