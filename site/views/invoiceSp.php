@@ -51,27 +51,6 @@ function gst($total, $gst_rate)
 }
 ?>
 <style>
-<<<<<<< HEAD
-.modal-dialog {
-    width: 80%;
-    /* margin: 30px auto; */
-}
-.modal-header { line-height:20px; }
-table,
-th,
-td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    text-align: center;
-}
-th,
-td {
-    padding: 2px;
-}
-th {
-    background: #cccccc87;
-}
-=======
     .modal-dialog {
         width: 80%;
         /* margin: 30px auto; */
@@ -99,7 +78,6 @@ th {
     th {
         background: #cccccc87;
     }
->>>>>>> a49cb9f5aea90095701258e9216b8d73dda2ef81
 </style>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -117,14 +95,9 @@ th {
             <div class="invoice overflow-auto">
                 <div style="min-width: 600px">
                     <div class="row">
-<<<<<<< HEAD
-                        <?php //echo "<pre>";print_r($orderdetails);echo "</pre>" ;?>
-                        <div style="padding:2px;margin:10px 20px;display: flow-root;">
-=======
                         <?php //echo "<pre>";print_r($orderdetails);echo "</pre>" ;
                         ?>
                         <div style="padding:20px;margin:10px 20px;display: flow-root;">
->>>>>>> a49cb9f5aea90095701258e9216b8d73dda2ef81
                             <div style="width:20%;float:left;">
                                 <img src="<?php echo $base_url_views; ?>customer/images/logo-new.png" style="">
                             </div>
@@ -150,11 +123,19 @@ th {
                             </div>
                             <div style="width:50%;float:right;text-align:right;">
                                 <p><strong>Billing Address :</strong></p>
-                                <p><span><?php echo $ship_address->bill_first_name; ?>
+                                <p>
+                                    <!-- <span>
+                                        <?php echo $ship_address->bill_first_name; ?>
                                         <?php echo $ship_address->bill_last_name; ?><br />
                                         <?php echo $ship_address->bill_city; ?><br /><?php echo $ship_address->bill_state; ?>,
                                         <?php echo $ship_address->bill_country; ?>,
-                                        <?php echo $ship_address->bill_post_code; ?></span></p>
+                                        <?php echo $ship_address->bill_post_code; ?>
+                                    </span> -->
+                                    <?php echo $ship_address->first_name; ?> <?php echo $ship_address->last_name; ?>
+                                    <br /><?php echo $ship_address->address1; ?>,
+                                    <br /><?php echo $ship_address->city; ?>,<?php echo $ship_address->state; ?>,
+                                    <?php echo $ship_address->post_code; ?>
+                                </p>
                             </div>
 
 
@@ -188,7 +169,7 @@ th {
                             </div>
                             <div style="width:50%;float:right;text-align:right;">
                                 <p><strong>Invoice Number:</strong> <span>
-                                        <?= $orderdetails[0]->order_id; ?><?= $ccno[0]['cc_code']; ?></span></p>
+                                        <?= $ccno[0]['cc_code']; ?><?= $orderdetails[0]->order_id; ?></span></p>
                                 <p><strong>Invoice Date : </strong> <span>
                                         <?php echo date('d/m/Y', strtotime($orderdetails[0]->cdate)); ?></span></p>
                             </div>
@@ -213,47 +194,6 @@ th {
                                     <th>SGST</th>
                                     <th>Total Saving</th>
                                 </tr>
-<<<<<<< HEAD
-                                <?php 
-                               $j='1';
-                               $qty = '0';
-                               $shippingcost = '0';
-                               if($orderdetails != '' && count($orderdetails) > 0){
-                                   foreach($orderdetails as $order){ 
-									   //$gstamt = ($order->product_item_price*($order->gst/100));
-									   $gstamt11 = number_format((($order->product_item_price*$order->product_quantity) * 100 / (100+ $order->gst)),'2','.','');
-									   $gstamt = ($order->product_item_price*$order->product_quantity) -$gstamt11;  
-									   if(strtolower($ship_address->state) == strtolower($getstatename)){
-											$displaygstamt = round($gstamt/2);
-									   } else {
-											$displaygstamt =  round($gstamt);
-									   }
-									   
-									   if($j<30){
-							  ?>
-                                <tr>
-                                    <td><?php echo $j; ?>.</td>
-                                    <td><?php echo $order->order_item_name; ?></td>
-                                    <td>Rs. <?php echo round($order->realprice); ?></td>
-                                    <td>Rs. <?php echo round($order->product_item_price); ?></td>
-                                    <td><?php echo $order->product_quantity; ?></td>
-                                    <td>Rs. <?php echo round(($order->product_item_price*$order->product_quantity)-$gstamt); ?></td>
-                                    <td>Rs. <?php echo round(($order->realprice-$order->product_item_price)*$order->product_quantity); ?></td>
-                                </tr>
-                                
-                                <?php }  $j++;
-                                
-                               // if($j>10){break;}
-                                
-                              $qty = $qty + $order->product_quantity;
-                              $price = $price + ($order->product_item_price*$order->product_quantity);   
-                              $shippingcost = $shippingcost + $order->productshipping; 
-							  $coupondiscount = $order->coupondiscount;
-                              $totalSaving = $totalSaving + (($order->realprice-$order->product_item_price)*$order->product_quantity);   
-                              } } ?>
-                                <tr>
-                                    <td colspan="5" style="text-align:right;">Grand Total:</td>
-=======
                                 <?php
                                 $j = '1';
                                 $qty = '0';
@@ -270,7 +210,7 @@ th {
                                         }
                                         ?>
                                         <tr>
-                                            <td><?php echo $j; ?>.</td>
+                                            <td><?php echo $j; ?></td>
                                             <td><?php echo $order->order_item_name; ?></td>
                                             <td><?php echo $order->hsn_code; ?></td>
                                             <td>Rs. <?php echo round($order->realprice); ?></td>
@@ -300,7 +240,6 @@ th {
                                 } ?>
                                 <tr>
                                     <td colspan="6" style="text-align:right;">Grand Total:</td>
->>>>>>> a49cb9f5aea90095701258e9216b8d73dda2ef81
                                     <td>Rs. <?php echo round(($price + $shippingcost - $coupondiscount)); ?></td>
                                 </tr>
                                 <tr>
@@ -314,11 +253,11 @@ th {
                                 <tr>
                                     <td colspan="7" style="text-align:right;font-size:18px;">For <strong><?php echo $vendordetails->name; ?>:</strong></td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <td colspan="7" style="text-align:right;font-size:18px;border-top:0">
                                         <br /><br />Authorized Signatory
                                     </td>
-                                </tr>
+                                </tr> -->
                             </table>
 
 
