@@ -180,7 +180,9 @@ class Collection extends CI_Controller
 		$config['total_rows'] = $return['count'];
 		//echo "<pre>";print_r($data);break;
 		$this->pagination->initialize($config);
-
+		// echo "<pre>";
+		// var_dump($data['result']);
+		// exit;
 		$this->load->view('list_collection', $data);
 	}
 
