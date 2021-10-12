@@ -124,6 +124,7 @@ class Collection_product_model extends CI_Model
 	{
 		$L_strErrorMessage = '';
 		$data['material_name'] = $content['material_name'];
+		$data['collection_id'] = $content['collection_id'];
 		$data['is_col_product'] = $content['is_col_product'];
 		// $data['weight'] = $content['weight'];
 		$data['price'] = $content['price'];
