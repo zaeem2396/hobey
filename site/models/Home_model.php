@@ -4378,4 +4378,10 @@ class Home_Model extends CI_Model
 		$sql = $this->db->select("id, name")->from("users")->where("id", $user_id)->get()->result_array();
 		return $sql;
 	}
+
+	public function getOrderDetails($order_id)
+	{
+		$sql = $this->db->query("select co.*,coi.*, p.material_name from ci_orders as co inner join ci_order_item as coi inner join product as p on p.id=coi.product_id WHERE co.order_id='$order_id' and coi.order_id='$order_id'")->result_array();
+		return $sql;
+	}
 }

@@ -281,7 +281,7 @@ $http_host = $this->config->item('http_host');
                                     <?php foreach ($orders_list as $order) : ?>
                                         <div id="orderSectionReload">
                                             <div class="row">
-                                                <div class="col-md-10">
+                                                <div class="col-md-8">
                                                     <h5 class="float-right">
                                                         Order ID: <b><?= $order['order_id'] ?></b>, Name: <span class="text-capitalize"><?= $order['first_name']; ?> <?= $order['last_name']; ?></span>, Address: <?= $order['address1']; ?>,<?= $order['post_code']; ?>, Expected Delivery Date: <?= ($order['exp_delivery_date'] != "") ? date("d-m-Y", strtotime($order['exp_delivery_date'])) : ""; ?></h5>
                                                     <h5> Payment: <?= ($order['paymentmode'] == '1') ? "Cash" : "Online"; ?> , Status: <select name="status" id="change_status_<?php echo $order['order_id']; ?>" onchange="change_order_status(this.value,0,<?php echo $order['order_id']; ?>,'<?php echo $order['order_status']; ?>');">
@@ -302,8 +302,12 @@ $http_host = $this->config->item('http_host');
                                                         </select>
                                                     </h5>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xl btn-danger">Delete Entire Order <i class="fa fa-trash"></i></button>
+                                                <div class="col-md-4">
+                                                    <?php if ($order['order_status'] != 'D') : ?>
+                                                        <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xl btn-danger">Delete Entire Order <i class="fa fa-trash"></i></button> | <a class="btn btn-xl btn-primary" href="edit-order/<?= $order['order_id'] ?>">Edit Order</a>
+                                                    <?php else : ?>
+                                                        <button class="btn btn-xl btn-danger" disabled>Delete Entire Order <i class="fa fa-trash"></i></button>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                             <table class="table table-bordered" id="orderList">
@@ -340,11 +344,16 @@ $http_host = $this->config->item('http_host');
                                                         <i class="fa fa-inr"></i><?= number_format($order['order_total']); ?>
                                                     </td>
                                                     <td>
-                                                        <?php foreach ($order['items'] as $item) : ?>
-                                                            <p>
-                                                                <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="<?= $item['order_item_name']; ?>"><i class="fa fa-trash"></i></button>
-                                                            </p>
-                                                        <?php endforeach; ?>
+                                                        <?php foreach ($order['items'] as $item) :  if ($order['order_status'] != 'D') : ?>
+                                                                <p>
+                                                                    <button onclick="deleteOrder(this)" data-price="<?= $item['product_item_price'] ?>" data-orderItemId="<?= $item['order_item_id'] ?>" data-orderId="<?= $item['order_id'] ?>" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="top" title="<?= $item['order_item_name']; ?>"><i class="fa fa-trash"></i></button>
+                                                                </p>
+                                                            <?php else : ?>
+                                                                <p>
+                                                                    <button class="btn btn-xs btn-danger" disabled><i class="fa fa-trash"></i></button>
+                                                                </p>
+                                                        <?php endif;
+                                                            endforeach;  ?>
                                                     </td>
                                                     <td style="width: 5%;">
                                                         <?php

@@ -1540,25 +1540,35 @@ class Home extends CI_Controller
 		}
 	}
 
+	// function editOrder()
+	// {
+	// 	$data = json_decode($_POST['data']);
+	// 	$id = '';
+	// 	$totalPrice = 0;
+	// 	foreach ($data as $d) :
+	// 		$qtyValue = $d->qtyValue;
+	// 		$prodPrice = $d->prodPrice;
+	// 		$prodQty = $d->prodQty;
+	// 		$orderItemId = $d->orderItemId;
+	// 		$orderId = $d->orderId;
+	// 		$id = $orderId;
+	// 		$newTotalPrice = $prodPrice * $qtyValue;
+	// 		$totalPrice += $newTotalPrice;
+	// 		$this->db->query("UPDATE ci_order_item SET product_quantity='$qtyValue', product_item_price='$newTotalPrice' WHERE order_item_id='$orderItemId'");
+	// 	// var_dump($this->db->last_query());
+	// 	// exit;
+	// 	endforeach;
+	// 	$this->db->query("update ci_orders set order_total='$totalPrice' where order_id='$id'");
+	// 	echo json_encode(["status" => 200]);
+	// }
+
 	function editOrder()
 	{
-		$data = json_decode($_POST['data']);
-		$id = '';
-		$totalPrice = 0;
-		foreach ($data as $d) :
-			$qtyValue = $d->qtyValue;
-			$prodPrice = $d->prodPrice;
-			$prodQty = $d->prodQty;
-			$orderItemId = $d->orderItemId;
-			$orderId = $d->orderId;
-			$id = $orderId;
-			$newTotalPrice = $prodPrice * $qtyValue;
-			$totalPrice += $newTotalPrice;
-			$this->db->query("UPDATE ci_order_item SET product_quantity='$qtyValue', product_item_price='$newTotalPrice' WHERE order_item_id='$orderItemId'");
-		// var_dump($this->db->last_query());
+		$data['order_id'] = $this->uri->segment(2);
+		$data['orderList'] = $this->home_model->getOrderDetails($data['order_id']);
+		// echo "<pre>";
+		// var_dump($data['orderList']);
 		// exit;
-		endforeach;
-		$this->db->query("update ci_orders set order_total='$totalPrice' where order_id='$id'");
-		echo json_encode(["status" => 200]);
+		$this->load->view('edit_order', $data);
 	}
 }

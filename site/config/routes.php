@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -68,6 +68,7 @@ $route['distributor-customer-my-order']  = "home/distributor_customer_my_order";
 $route['distributor-wishlist']  = "home/distributor_wishlist";
 $route['distributor-my-inventory']  = "home/distributor_my_inventory";
 $route['distributor-monthly-order']  = "home/distributor_monthly_order";
+$route['edit-order/(:num)']  = "home/editOrder/$1";
 
 $route['vendor-my-inventory']  = "home/vendor_my_inventory";
 
