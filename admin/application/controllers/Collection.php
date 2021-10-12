@@ -42,7 +42,6 @@ class Collection extends CI_Controller
 			$fields['discount'] = "discount";
 
 			$this->validation->set_fields($fields);
-
 			//upload excel data
 			$file_path = $_FILES['csv']['tmp_name'];
 			$file_type = $_FILES['csv']['type'];
@@ -56,6 +55,28 @@ class Collection extends CI_Controller
 			$objWorksheet = $PHPExcel->getActiveSheet();
 			$highestrow = $objWorksheet->getHighestRow();
 			if ($highestrow != 0) {
+				$hasInsert = false;
+				for ($i = 2; $i <= $highestrow; $i++) {
+					$obj_insData = array(
+						'code.' => addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue())
+					);
+					if ($obj_insData == '' && count($obj_insData) == '0') {
+						// continue;
+					} else {
+						$material_name = addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue());
+						if ($material_name != '') {
+							if (!$this->collection_product_model->isExistByMaterialName($material_name)) {
+								$hasInsert = true;
+								break;
+							}
+						}
+					}
+				}
+
+				if ($hasInsert) {
+					$collection_id = $this->collection_model->add($data);
+				}
+
 				for ($i = 2; $i <= $highestrow; $i++) {
 					$obj_insData = array(
 						'code.' => addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue())
@@ -94,14 +115,14 @@ class Collection extends CI_Controller
 								$id = $this->collection_product_model->commonGetId("product", "material_name", "id", $excel_data['material_name']);
 								$this->collection_product_model->edit($id, $excel_data);
 							} else {
-								$this->collection_product_model->add($excel_data);
+								$temp = $this->collection_product_model->add(array_merge($excel_data, ['collection_id' => $collection_id]));
 							}
 						}
 					}
 				}
 			}
 			//upload excel data ends
-			$this->collection_model->add($data);
+			// $this->collection_model->add($data);
 			$this->session->set_flashdata('L_strErrorMessage', 'Collection Added Successfully!');
 			redirect($this->config->item('base_url') . 'collection/lists');
 
@@ -149,7 +170,7 @@ class Collection extends CI_Controller
 			$data['allstate'] = $this->collection_model->alldata("state");
 			$data['allcity'] = $this->collection_model->alldata("city");
 			$data['allPincode'] = $this->collection_model->alldata("pincode");
-			$data["allcproducts"] = $this->collection_model->allcproducts($result[0]->city_id);
+			$data["allcproducts"] = $this->collection_model->allcproducts($result[0]->id);
 			// echo "<pre>";
 			// var_dump($data["allcproducts"]);
 			// exit;

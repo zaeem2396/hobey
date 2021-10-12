@@ -37,7 +37,7 @@ class Collection_model extends CI_Model
 
 		$this->_data = $data;
 		if ($this->db->insert('tbl_collection', $this->_data)) {
-			return true;
+			return $this->db->insert_id();
 		} else {
 			return false;
 		}
@@ -153,9 +153,9 @@ class Collection_model extends CI_Model
 		}
 	}
 
-	function allcproducts($city_id = NULL)
+	function allcproducts($id = null)
 	{
-		$query = "SELECT * from product where is_col_product= 1 and city_id = '$city_id'";
+		$query = "SELECT * from product where is_col_product= 1 and collection_id = '$id'";
 		$result = $this->db->query($query);
 		if ($result->num_rows() > 0) {
 			$result = $result->result();
