@@ -48,32 +48,25 @@ function AmountInWords(float $amount)
     width: 80%;
     /* margin: 30px auto; */
 }
-
 table,
 th,
 td {
-
     border: 1px solid black;
-
     border-collapse: collapse;
-
     text-align: center;
-
 }
-
 th,
 td {
-
     padding: 10px;
-
+    line-height:12px;
 }
-
 th {
     background: #cccccc87;
+    line-height:12px;
 }
 </style>
 <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
     <div class="toolbar hidden-print" style="margin-right: 35px;">
         <div class="text-right">
             <?php if($panel == '1'){ ?>
@@ -86,13 +79,13 @@ th {
                     class="fa fa-file-pdf-o"></i> Export as PDF</button>
         </div>
     </div>
-    <div class="modal-body" id="tblCustomers">
+    <div id="tblCustomers" class="canvas_div_pdf">
         <div id="invoice tab">
             <div class="invoice overflow-auto">
                 <div style="min-width: 600px">
                     <div class="row">
                         <?php //echo "<pre>";print_r($orderdetails);echo "</pre>" ;?>
-                        <div style="padding:20px;margin:10px 20px;display: flow-root;">
+                        <div style="padding:5px;margin:5px 5px;display: flow-root;">
                             <div style="width:20%;float:left;">
                                 <img src="<?php echo $base_url_views;?>customer/images/logo-new.png" style="">
                             </div>
@@ -103,7 +96,7 @@ th {
                             </div>
                         </div>
                         <div class="clear:both;"></div>
-                        <div style="padding:10px 20px;;margin:10px 20px;display: flow-root;">
+                        <div style="padding:5px 20px;;margin:5px 20px;display: flow-root;">
                             <div style="width:50%;float:left;">
                             <p><strong>Sold By :</strong></p>
                                 <p><span><?php echo $vendordetails->name; ?>
@@ -240,11 +233,52 @@ th {
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js">
-    </script>
+    <!--script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"-->
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
+    <script>
+    
+    function Export(){
+
+		var HTML_Width = $(".canvas_div_pdf").width();
+		var HTML_Height = $(".canvas_div_pdf").height();
+	 
+		var top_left_margin = 15;
+		var PDF_Width = HTML_Width+(top_left_margin*2);
+		var PDF_Height = (PDF_Width*1.5)+(top_left_margin*2);
+		var canvas_image_width = HTML_Width;
+		var canvas_image_height = HTML_Height;
+		
+		var totalPDFPages = Math.ceil(HTML_Height/PDF_Height)-1;
+
+		html2canvas($(".canvas_div_pdf")[0],{allowTaint:true}).then(function(canvas) {
+			canvas.getContext('2d');
+			
+			console.log(canvas.height+"  "+canvas.width);
+			
+			
+			var imgData = canvas.toDataURL("image/jpeg", 1.0);
+			var pdf = new jsPDF('p', 'pt',  [PDF_Width, PDF_Height]);
+		    pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin,canvas_image_width,canvas_image_height);
+			
+			
+			for (var i = 1; i <= totalPDFPages; i++) { 
+				pdf.addPage(PDF_Width, PDF_Height);
+				pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+			}
+			
+		    pdf.save("invoice.pdf");
+        });
+	};
+	
+	</script>
+    
     <script type="text/javascript">
-    function Export() {
+    function Expor111t() {
         // html2canvas(document.getElementById('tblCustomers'), {
         //     onrendered: function(canvas) {
         //         var data = canvas.toDataURL();
@@ -257,17 +291,29 @@ th {
         //         pdfMake.createPdf(docDefinition).download("invoice.pdf");
         //     }
         // });
-
-        html2canvas($("#tblCustomers")[0],{allowTaint:true}).then(function(canvas) {
+        html2canvas($("#tblCustomers"), {
+            onrendered: function(canvas) {         
+                var imgData = canvas.toDataURL(
+                    'image/png');              
+                var doc = new jsPDF('p', 'mm');
+                doc.addImage(imgData, 'PNG', 10, 10);
+                doc.save('invoice.pdf');
+            }
+        });
+        
+        /*html2canvas($("#tblCustomers")[0],{allowTaint:true}).then(function(canvas) {
 			var data = canvas.toDataURL();
 			var docDefinition = {
                     content: [{
                         image: data,
-                        width: 500
-                    }]
+                    }],
+                    pageSize: [{
+                        width: 500,
+                        height: 'auto'
+                      }],
                 };
                 pdfMake.createPdf(docDefinition).download("invoice.pdf");
-        });
+        });*/
 
     }
     </script>

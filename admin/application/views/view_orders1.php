@@ -138,10 +138,13 @@
                                     <?php $order_date = strtotime( $order['cdate'] );
                                        echo $mysqldate = date( 'l, F d, Y', $order_date );?>
                                  </address>
-                                 <button type="button"
+                                 <!--button type="button"
                                                     onclick="createinvoice(<?php echo $order['order_id']?>);"
                                                     data-toggle="modal" data-target="#invoce_modal" class="btn btn-default-red"
-                                                    style="float:right;padding: 6px 20px;">Invoice</button>
+                                                    style="float:right;padding: 6px 20px;">Invoice</button -->
+                                                    
+                                 <a class="button" href='<?php echo $front_base_url."index.php/home/createinvoice_vendor_sp1/".$order['order_id']?>'" target="_blank" style="float:right;padding: 6px 20px;">Invoice</a>
+                                                    
                               </div>
                            </div>
                            <div class="row">

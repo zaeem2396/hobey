@@ -320,7 +320,7 @@ class Orders_model extends CI_Model
 		$this->db->select('users.name as user_name');
 		$this->db->select('users.mobile as user_mobile');
 		//$this->db->select('users.lname as lname');
-		$this->db->select('ci_orders.*');
+		$this->db->select('ci_orders.*,ci_orders.order_id as ordernumberun');
 		$this->db->select('ci_shipping_address.*');
 
 		$this->db->where('ci_orders.is_customer', '2');

@@ -170,7 +170,7 @@
                                                     ?>
                                                     <tr>
                                                         <!-- <td><input name="selected[]" id="selected[]" value="<?php echo $orders['order_id']; ?>" type="checkbox"  class="minimal-red"></td> -->
-                                                        <td><?php echo $orders['order_id']; ?><input type="hidden" name="order_id" value="<?php echo $orders['order_id']; ?>"></td>
+                                                        <td><?php echo $orders['ordernumberun']; ?><input type="hidden" name="order_id" value="<?php echo $orders['ordernumberun']; ?>"></td>
                                                         <td style="text-align:left"><?php
                                                                                             $order_date = strtotime($orders['cdate']);
                                                                                             echo $mysqldate = date('F d, Y', $order_date); ?></td>
@@ -217,10 +217,10 @@
                                                                             ?> 
                                     </td>  -->
                                                         <td class="text-center">
-                                                            <a class="btn bg-purple2" href="<?php echo $base_url . 'orders/detail1/' . $orders['order_id'] ?>" title="Detail">
+                                                            <a class="btn bg-purple2" href="<?php echo $base_url . 'orders/detail1/' . $orders['ordernumberun'] ?>" title="Detail">
                                                                 <i class="fa fa-eye"> Details</i>
                                                             </a>&nbsp;
-                                                            <a class="btn bg-purple2" style="background-color:red;" href="javascript:void(0);" onclick="delete_order(<?php echo $orders['order_id']; ?>);" title="Delete">
+                                                            <a class="btn bg-purple2" style="background-color:red;" href="javascript:void(0);" onclick="delete_order(<?php echo $orders['ordernumberun']; ?>);" title="Delete">
                                                                 <i class="fa fa-trash-o"> Delete</i>
                                                             </a>
                                                         </td>

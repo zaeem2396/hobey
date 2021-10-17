@@ -1485,6 +1485,22 @@ class Home extends CI_Controller
 		$html = $this->load->view('invoiceSp', $data, true);
 		echo $html;
 	}
+	
+	function createinvoice_vendor_sp1($id)
+	{
+		$orderid = $id;
+		$data['panel'] = $this->input->post("panel");
+		$data['orderid'] = $orderid;
+		$this->load->model('account_model');
+		$data["orderdetails"] = $this->account_model->getorderinvoice($orderid);
+		//print_r($data["orderdetails"]);die;
+		$data["vendordetails"] = $this->account_model->vendordetails($data["orderdetails"][0]->distributor_id);
+
+		$data["ship_address"] = $this->account_model->ship_address($data["orderdetails"][0]->order_id);
+		$data['profile'] = $this->account_model->getuserdata($data["orderdetails"][0]->user_id);
+		$html = $this->load->view('invoiceSp', $data, true);
+		echo $html;
+	}
 
 	function distributor_monthly_order()
 	{
