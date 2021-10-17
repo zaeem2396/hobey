@@ -304,7 +304,7 @@ $http_host = $this->config->item('http_host');
                                                 </div>
                                                 <div class="col-md-4">
                                                     <?php if ($order['order_status'] != 'D') : ?>
-                                                        <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xl btn-danger">Delete Entire Order <i class="fa fa-trash"></i></button> | <a class="btn btn-xl btn-primary" href="<?= $base_url ?>edit-order/<?= $order['order_id'] ?>">Edit Order</a>
+                                                        <button onclick="deleteCompleteOrder(this)" data-orderId="<?= $order['order_id'] ?>" class="btn btn-xl btn-danger">Delete Entire Order <i class="fa fa-trash"></i></button> | <a class="btn btn-xl btn-primary" href="edit-order/<?= $order['order_id'] ?>">Edit Order</a>
                                                     <?php else : ?>
                                                         <button class="btn btn-xl btn-danger" disabled>Delete Entire Order <i class="fa fa-trash"></i></button>
                                                     <?php endif; ?>
