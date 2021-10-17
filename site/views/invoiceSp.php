@@ -214,7 +214,7 @@ function gst($total, $gst_rate)
                                             <td><?php echo $order->order_item_name; ?></td>
                                             <td><?php echo $order->hsn_code; ?></td>
                                             <td>Rs. <?php echo round($order->realprice); ?></td>
-                                            <td>Rs. <?php echo round($order->product_item_price); ?></td>
+                                            <td>Rs. <?php echo round($order->product_item_price / $order->product_quantity); ?></td>
                                             <td><?php echo $order->product_quantity; ?></td>
                                             <!-- <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td> -->
                                             <td>Rs. <?php echo round(($order->product_item_price)); ?></td>
@@ -228,14 +228,14 @@ function gst($total, $gst_rate)
                                                         ?>
                                             </td>
                                             <td><?php echo number_format($res / 2, 2); ?></td>
-                                            <td>Rs. <?php echo round(($order->realprice - $order->product_item_price) * $order->product_quantity); ?></td>
+                                            <td>Rs. <?php echo round(($order->realprice - ($order->product_item_price / $order->product_quantity)) * $order->product_quantity); ?></td>
                                         </tr>
                                 <?php $j++;
                                         $qty = $qty + $order->product_quantity;
                                         $price = $price + ($order->product_item_price * $order->product_quantity);
                                         $shippingcost = $shippingcost + $order->productshipping;
                                         $coupondiscount = $order->coupondiscount;
-                                        $totalSaving = $totalSaving + (($order->realprice - $order->product_item_price) * $order->product_quantity);
+                                        $totalSaving = $totalSaving + (($order->realprice - ($order->product_item_price / $order->product_quantity)) * $order->product_quantity);
                                     }
                                 } ?>
                                 <tr>

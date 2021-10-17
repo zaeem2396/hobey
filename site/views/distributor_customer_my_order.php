@@ -358,7 +358,8 @@ $http_host = $this->config->item('http_host');
                                                     <td style="width: 5%;">
                                                         <?php
                                                             if ($order['is_customer'] == 2) { ?>
-                                                            <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;"><i class="fa fa-file-pdf-o" style="font-size: large;" aria-hidden="true"></i></button>
+                                                            <!-- <button type="button" onclick="createinvoice1(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-xs btn-default-red" style="float:right;padding: 6px 20px;"><i class="fa fa-file-pdf-o" style="font-size: large;" aria-hidden="true"></i></button> -->
+                                                            <a href="<?php echo $base_url; ?>home/createinvoice_vendor_sp1/<?php echo $order['order_id'] ?>" target="_blank" class="btn btn-default-red" style="float:right;padding: 6px 20px;">Invoice</a>
                                                         <?php } else { ?>
                                                             <button type="button" onclick="createinvoice(<?php echo $order['order_id'] ?>);" data-toggle="modal" data-target="#invoce_modal" class="btn btn-lg btn-default-red" style="float:right;padding: 6px 20px;font-size: large;">Invoice</button>
                                                         <?php } ?>
