@@ -217,7 +217,7 @@ function gst($total, $gst_rate)
                                             <td>Rs. <?php echo round($order->product_item_price); ?></td>
                                             <td><?php echo $order->product_quantity; ?></td>
                                             <!-- <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity) - $gstamt); ?></td> -->
-                                            <td>Rs. <?php echo round(($order->product_item_price * $order->product_quantity)); ?></td>
+                                            <td>Rs. <?php echo round(($order->product_item_price)); ?></td>
                                             <td><?= $order->gst; ?>%</td>
                                             <td>
                                                 <?php
@@ -240,14 +240,16 @@ function gst($total, $gst_rate)
                                 } ?>
                                 <tr>
                                     <td colspan="6" style="text-align:right;">Grand Total:</td>
-                                    <td>Rs. <?php echo round(($price + $shippingcost - $coupondiscount)); ?></td>
+                                    <!-- <td>Rs. <?php echo round(($price + $shippingcost - $coupondiscount)); ?></td> -->
+                                    <td>Rs. <?= $order->order_total; ?></td>
                                 </tr>
                                 <tr>
                                     <td colspan="6" style="text-align:right;">Total Savings:</td>
                                     <td>Rs. <?php echo round($totalSaving); ?></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="7" style="text-align:left;font-size:18px;">Amount in Words: <?php echo AmountInWords(round(($price + $shippingcost - $coupondiscount))); ?></td>
+                                    <!-- <td colspan="7" style="text-align:left;font-size:18px;">Amount in Words: <?php echo AmountInWords(round(($price + $shippingcost - $coupondiscount))); ?></td> -->
+                                    <td colspan="7" style="text-align:left;font-size:18px;">Amount in Words: <?php echo AmountInWords(round(($order->order_total))); ?></td>
                                 </tr>
 
                                 <tr>
