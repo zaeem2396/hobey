@@ -1510,7 +1510,9 @@ class Home extends CI_Controller
 		// exit;
 		$data['alldistributors'] = $this->home_model->spdistributors();
 		$data['distributorName'] = $this->home_model->getDistributorName($this->session->userdata('userid'));
-		// echo "<pre>";var_dump($data['distributorName']);exit;
+		// echo "<pre>";
+		// var_dump($data['all_collections']);
+		// exit;
 		$this->load->view('distributor_monthly_order', $data);
 	}
 

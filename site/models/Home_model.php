@@ -2673,7 +2673,6 @@ class Home_Model extends CI_Model
 
 	function all_collections()
 	{
-
 		if ($this->session->userdata('check_pincode') != '') {
 			$pincode = $this->session->userdata('check_pincode');
 		} else if ($this->session->userdata('pincode') != '') {
@@ -2684,13 +2683,13 @@ class Home_Model extends CI_Model
 
 		//$sql = "SELECT * FROM tbl_collection where start_date <= '".date("Y-m-d")."' and end_date >= '".date("Y-m-d")."' and enabled =1";
 
+		// $sql = "SELECT p.* FROM tbl_collection p 
+		// LEFT JOIN pincode as pincode ON pincode.city_id = p.city_id 
+		// where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1";
+
 		$sql = "SELECT p.* FROM tbl_collection p 
 		LEFT JOIN pincode as pincode ON pincode.city_id = p.city_id 
-		where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1";
-
-		// $sql_bkup = "SELECT p.* FROM tbl_collection p 
-		// LEFT JOIN pincode as pincode ON pincode.city_id = p.city_id 
-		// where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1 and pincode.name IN (" . $pincode . ")  ";
+		where start_date <= '" . date("Y-m-d") . "' and end_date >= '" . date("Y-m-d") . "' and enabled =1 and pincode.name IN (" . $pincode . ")  ";
 
 
 		$query = $this->db->query($sql);

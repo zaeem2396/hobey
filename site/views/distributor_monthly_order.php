@@ -52,7 +52,6 @@
                                             <table class="table table-striped" id="productList">
                                                 <tr class="font-weight-bold">
                                                     <th>Item</th>
-                                                    <th>Package size</th>
                                                     <th>MRP</th>
                                                     <th>Special price</th>
                                                     <th>Order qty</th>
@@ -63,7 +62,6 @@
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $value->material_name; ?></td>
-                                                        <td><?php echo $value->weight; ?></td>
                                                         <td>Rs. <span id="trpice_<?php echo $value->id; ?>"><?php echo $value->mrp; ?></span></td>
                                                         <td>Rs. <span id="trpice_<?php echo $value->id; ?>"><?php echo $value->price; ?></span></td>
                                                         <!-- <td><input style="width:50px;" name="productqty[]" oninput="this.value = Math.abs(this.value)" value="0" id="quantityb_<?php echo $value->id; ?>" min="1">
