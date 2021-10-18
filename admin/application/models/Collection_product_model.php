@@ -195,13 +195,13 @@ class Collection_product_model extends CI_Model
 		}
 	}
 
-	public function isExistByMaterialName($material_name)
+	public function isExistByMaterialName($material_name, $collection_name)
 	{
 		// $this->db->where('material_name', $material_name);
 		// $this->db->where('is_col_product', 1);
 		// $query = $this->db->get('product');
 
-		$sql = "select * from product where BINARY material_name = BINARY '" . $material_name . "' and is_col_product=1";
+		$sql = "select p.*, c.name from product as p inner join tbl_collection as c on p.collection_id=c.id where BINARY material_name = BINARY '$material_name' and is_col_product=1 and c.name='$collection_name'";
 		$query = $this->db->query($sql);
 
 		if ($query->num_rows() > 0) {
@@ -210,9 +210,12 @@ class Collection_product_model extends CI_Model
 		return false;
 	}
 
-	public function commonGetId($table_name, $columname, $return, $id)
+	public function commonGetId($table_name, $columname, $return, $id, $collection_id = null)
 	{
 		$this->db->where($columname, $id);
+		if ($collection_id) {
+			$this->db->where("collection_id", $collection_id);
+		}
 		$query = $this->db->get($table_name);
 		if ($query->num_rows() > 0) {
 			$result = $query->row()->$return;

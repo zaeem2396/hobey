@@ -32,6 +32,7 @@ class Collection extends CI_Controller
 			foreach ($form_field as $key => $value) {
 				$data[$key] = $this->input->post($key);
 			}
+			$collection_name = $data['name'];
 			$this->load->library('validation');
 
 
@@ -65,7 +66,7 @@ class Collection extends CI_Controller
 					} else {
 						$material_name = addslashes($PHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue());
 						if ($material_name != '') {
-							if (!$this->collection_product_model->isExistByMaterialName($material_name)) {
+							if (!$this->collection_product_model->isExistByMaterialName($material_name, $collection_name)) {
 								$hasInsert = true;
 								break;
 							}
@@ -75,6 +76,8 @@ class Collection extends CI_Controller
 
 				if ($hasInsert) {
 					$collection_id = $this->collection_model->add($data);
+				} else {
+					$collection_id = $this->collection_model->getIdByName($collection_name);
 				}
 
 				for ($i = 2; $i <= $highestrow; $i++) {
@@ -111,8 +114,10 @@ class Collection extends CI_Controller
 						);
 
 						if ($excel_data['material_name'] != '') {
-							if ($this->collection_product_model->isExistByMaterialName($excel_data['material_name'])) {
-								$id = $this->collection_product_model->commonGetId("product", "material_name", "id", $excel_data['material_name']);
+							if ($this->collection_product_model->isExistByMaterialName($excel_data['material_name'], $collection_name)) {
+								$id = $this->collection_product_model->commonGetId("product", "material_name", "id", $excel_data['material_name'], $collection_id);
+								// var_dump($id);
+								// exit;
 								$this->collection_product_model->edit($id, $excel_data);
 							} else {
 								$temp = $this->collection_product_model->add(array_merge($excel_data, ['collection_id' => $collection_id]));

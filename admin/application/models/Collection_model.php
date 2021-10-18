@@ -169,4 +169,10 @@ class Collection_model extends CI_Model
 		$this->db->where('id', $id);
 		return $this->db->update('tbl_collection', $content);
 	}
+
+	function getIdByName($collection_name)
+	{
+		$sql = $this->db->select('id')->from("tbl_collection")->where("name", $collection_name)->get()->result_array();
+		return $sql[0]['id'];
+	}
 }
